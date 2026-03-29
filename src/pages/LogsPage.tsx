@@ -48,14 +48,14 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
         <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Immutable audit trail of all document actions including Brevo email notifications.</Typography>
       </Box>
 
-      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(201,149,42,0.2)', mb: 3, minHeight: 36 }}>
+      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(245,168,0,0.2)', mb: 3, minHeight: 36 }}>
         <Tab label={`Transaction Logs (${logs.length})`} sx={{ minHeight: 36, fontSize: '0.68rem' }} />
         <Tab label={`Document History (${documents.length})`} sx={{ minHeight: 36, fontSize: '0.68rem' }} />
       </Tabs>
 
       {tab === 0 && (
-        <Paper sx={{ bgcolor: '#1a2e45' }}>
-          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(201,149,42,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Paper sx={{ bgcolor: '#0f1e2e' }}>
+          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>System Audit Log</Typography>
             <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8fa3b8' }}>{logs.length} entries</Typography>
           </Box>
@@ -63,7 +63,7 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
             <Box sx={{ py: 8, textAlign: 'center' }}><Typography sx={{ color: '#8fa3b8', fontSize: '0.8rem' }}>No logs yet.</Typography></Box>
           ) : (
             logs.map((log, i) => (
-              <Box key={log.id} sx={{ display: 'flex', gap: 2.5, px: 3, py: 1.5, borderBottom: i < logs.length - 1 ? '1px solid rgba(201,149,42,0.06)' : 'none', '&:hover': { bgcolor: 'rgba(201,149,42,0.03)' } }}>
+              <Box key={log.id} sx={{ display: 'flex', gap: 2.5, px: 3, py: 1.5, borderBottom: i < logs.length - 1 ? '1px solid rgba(245,168,0,0.06)' : 'none', '&:hover': { bgcolor: 'rgba(245,168,0,0.03)' } }}>
                 <Box sx={{ width: 155, flexShrink: 0 }}>
                   <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8fa3b8', lineHeight: 1.5 }}>{fmt(log.at)}</Typography>
                 </Box>
@@ -76,7 +76,7 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
                   <Typography sx={{ fontSize: '0.72rem', color: '#8fa3b8', mt: 0.2 }}>{log.docTitle}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.4 }}>
                     <Typography sx={{ fontSize: '0.65rem', color: '#c9952a' }}>{log.by}</Typography>
-                    <Chip label={log.role} size="small" sx={{ height: 16, fontSize: '0.55rem', fontFamily: "'IBM Plex Mono',monospace", bgcolor: 'rgba(201,149,42,0.08)', color: '#8fa3b8', border: '1px solid rgba(201,149,42,0.2)', '& .MuiChip-label': { px: 0.8 } }} />
+                    <Chip label={log.role} size="small" sx={{ height: 16, fontSize: '0.55rem', fontFamily: "'IBM Plex Mono',monospace", bgcolor: 'rgba(245,168,0,0.08)', color: '#8fa3b8', border: '1px solid rgba(245,168,0,0.2)', '& .MuiChip-label': { px: 0.8 } }} />
                   </Box>
                 </Box>
               </Box>
@@ -86,8 +86,8 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
       )}
 
       {tab === 1 && (
-        <Paper sx={{ bgcolor: '#1a2e45' }}>
-          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+        <Paper sx={{ bgcolor: '#0f1e2e' }}>
+          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
             <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>RET Document History</Typography>
           </Box>
           {documents.length === 0 ? (
@@ -121,12 +121,12 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
                       <TableCell>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.3 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
-                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToVP ? '#66bb6a' : '#555' }} />
-                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToVP ? '#66bb6a' : '#555', fontFamily: "'IBM Plex Mono',monospace" }}>VP</Typography>
+                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToVP ? '#66bb6a' : '#4a6070' }} />
+                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToVP ? '#66bb6a' : '#4a6070', fontFamily: "'IBM Plex Mono',monospace" }}>VP</Typography>
                           </Box>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
-                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToStaff ? '#4fc3f7' : '#555' }} />
-                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToStaff ? '#4fc3f7' : '#555', fontFamily: "'IBM Plex Mono',monospace" }}>Staff</Typography>
+                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToStaff ? '#4fc3f7' : '#4a6070' }} />
+                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToStaff ? '#4fc3f7' : '#4a6070', fontFamily: "'IBM Plex Mono',monospace" }}>Staff</Typography>
                           </Box>
                         </Box>
                       </TableCell>

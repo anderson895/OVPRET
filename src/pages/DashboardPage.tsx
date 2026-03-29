@@ -33,15 +33,15 @@ const fmtDate = (ts: any) => {
 }
 
 const StatCard: React.FC<{ label: string; value: number | string; color?: string; sub?: string }> = ({ label, value, color, sub }) => (
-  <Paper sx={{ p: '18px 22px', bgcolor: '#1a2e45' }}>
+  <Paper sx={{ p: '18px 22px', bgcolor: '#0f1e2e' }}>
     <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.8 }}>{label}</Typography>
-    <Typography sx={{ fontSize: '1.9rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: color || '#f5f0e8', lineHeight: 1 }}>{value}</Typography>
+    <Typography sx={{ fontSize: '1.9rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: color || '#f0e8d0', lineHeight: 1 }}>{value}</Typography>
     {sub && <Typography sx={{ fontSize: '0.68rem', color: '#8fa3b8', mt: 0.4 }}>{sub}</Typography>}
   </Paper>
 )
 
 const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void }> = ({ label, active, onClick }) => (
-  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : 'rgba(201,149,42,0.2)', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? 'rgba(201,149,42,0.08)' : 'transparent', '&:hover': { borderColor: '#c9952a', color: '#c9952a' } }}>
+  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : 'rgba(245,168,0,0.2)', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? 'rgba(245,168,0,0.08)' : 'transparent', '&:hover': { borderColor: '#c9952a', color: '#c9952a' } }}>
     {label}
   </Box>
 )
@@ -83,9 +83,9 @@ export const DashboardPage: React.FC<Props> = ({ documents, user }) => {
         <Grid item xs={6} sm={3}><StatCard label="For Revision" value={counts.revision} color="#4fc3f7" sub="Needs resubmission" /></Grid>
       </Grid>
 
-      <Paper sx={{ bgcolor: '#1a2e45' }}>
+      <Paper sx={{ bgcolor: '#0f1e2e' }}>
         {/* Header */}
-        <Box sx={{ p: '18px 24px', borderBottom: '1px solid rgba(201,149,42,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1.5 }}>
+        <Box sx={{ p: '18px 24px', borderBottom: '1px solid rgba(245,168,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1.5 }}>
           <Box>
             <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>RET Document Tracker</Typography>
             <Typography sx={{ fontSize: '0.65rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace", letterSpacing: 1 }}>
@@ -102,7 +102,7 @@ export const DashboardPage: React.FC<Props> = ({ documents, user }) => {
         </Box>
 
         {/* Filters */}
-        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(201,149,42,0.2)', display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(245,168,0,0.2)', display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
           <TextField size="small" placeholder="Search title, RET ID, department..." value={search} onChange={(e) => setSearch(e.target.value)}
             InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 15, color: '#8fa3b8' }} /></InputAdornment>, sx: { fontSize: '0.78rem', minWidth: 260 } }}
           />

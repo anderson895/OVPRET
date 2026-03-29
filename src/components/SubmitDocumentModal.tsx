@@ -94,8 +94,8 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#1a2e45' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>Submit RET Document</Typography>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 0.3, letterSpacing: '1px' }}>
@@ -120,29 +120,29 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
 
         <Grid container spacing={2.5}>
           <Grid item xs={12}>
-            <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} placeholder="e.g., Q1 Budget Request FY 2024" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} placeholder="e.g., Q1 Budget Request FY 2024" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
+            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
               sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' } }}
-              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#1a2e45', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e6c8', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
               {DOC_TYPES.map((t) => <MenuItem key={t} value={t} sx={{ fontSize: '0.85rem' }}>{t}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Department / Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
+            <TextField select label="Department / Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
               sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' } }}
-              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#1a2e45', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e6c8', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d} sx={{ fontSize: '0.85rem' }}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Remarks / Notes" fullWidth multiline minRows={3} value={form.remarks} onChange={field('remarks')} disabled={uploading} placeholder="Optional — any notes for the VP..." InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Remarks / Notes" fullWidth multiline minRows={3} value={form.remarks} onChange={field('remarks')} disabled={uploading} placeholder="Optional — any notes for the VP..." InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
             <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
             {file ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(201,149,42,0.3)', borderRadius: 1.5, bgcolor: 'rgba(201,149,42,0.05)' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(245,168,0,0.3)', borderRadius: 1.5, bgcolor: 'rgba(245,168,0,0.05)' }}>
                 <InsertDriveFileIcon sx={{ color: '#c9952a', fontSize: 28 }} />
                 <Box sx={{ flex: 1 }}>
                   <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#fff' }}>{file.name}</Typography>
@@ -152,7 +152,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
               </Box>
             ) : (
               <Box onClick={() => !uploading && fileRef.current?.click()} onDragOver={(e) => { e.preventDefault(); setDragging(true) }} onDragLeave={() => setDragging(false)} onDrop={handleDrop}
-                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(201,149,42,0.25)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? 'rgba(201,149,42,0.05)' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}>
+                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(245,168,0,0.25)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? 'rgba(245,168,0,0.05)' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}>
                 <CloudUploadIcon sx={{ fontSize: 34, color: '#8fa3b8', mb: 1 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#8fa3b8' }}>
                   Drag & drop or <Box component="span" sx={{ color: '#c9952a', fontWeight: 600 }}>click to browse</Box>
@@ -165,7 +165,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
         </Grid>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(201,149,42,0.2)', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(245,168,0,0.2)', gap: 1 }}>
         <Button onClick={handleClose} disabled={uploading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
         <Button onClick={handleSubmit} disabled={uploading} variant="contained" sx={{ fontSize: '0.72rem', minWidth: 180 }}>
           {uploading ? 'Submitting...' : 'Submit for VP Approval'}

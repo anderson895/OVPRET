@@ -1,18 +1,76 @@
 import { createTheme } from '@mui/material/styles'
 
-// ── Marinduque State University ───────────────────────────────
-// Maroon : #7B1C2E  |  Gold : #F5A800  |  Dark Gold : #C98A00
-// Background: white  |  Text: dark
+// ── OVPRET DTS — Canonical Color Palette ─────────────────────────
+//
+//  SURFACES
+//  Dark surface    : #0f1e2e   (main page/card/modal bg)
+//  Sidebar/Login   : #7B1C2E  (maroon)
+//  App background  : #F7F5F2  (light parchment — login page only)
+//
+//  ACCENT
+//  Gold            : #F5A800
+//  Gold (muted)    : #c9952a  (labels, IDs, section tags)
+//  Gold dark       : #C98A00
+//
+//  TEXT (on dark surfaces)
+//  Primary cream   : #f0e8d0
+//  Muted blue-gray : #8fa3b8
+//  Dim (placeholders): #6a8aaa
+//  Labels          : #a8bfd4
+//
+//  TEXT (on light surfaces)
+//  Primary dark    : #1C0A0E
+//  Secondary       : #6B4050
+//
+//  STATUS
+//  Success         : #66bb6a
+//  Warning/Pending : #ffa726
+//  Error           : #ef5350
+//  Info/Revision   : #4fc3f7
+//  Review          : #ce93d8
+// ─────────────────────────────────────────────────────────────────
+
+export const C = {
+  // Surfaces
+  dark:       '#0f1e2e',
+  maroon:     '#7B1C2E',
+  maroonHover:'#a8283f',
+  appBg:      '#F7F5F2',
+
+  // Gold
+  gold:       '#F5A800',
+  goldMuted:  '#c9952a',
+  goldDark:   '#C98A00',
+  goldLight:  '#FFD04D',
+
+  // Text on dark
+  cream:      '#f0e8d0',
+  mutedBlue:  '#8fa3b8',
+  dimBlue:    '#6a8aaa',
+  labelBlue:  '#a8bfd4',
+
+  // Text on light
+  textDark:   '#1C0A0E',
+  textSub:    '#6B4050',
+
+  // Status
+  success:    '#66bb6a',
+  warning:    '#ffa726',
+  error:      '#ef5350',
+  info:       '#4fc3f7',
+  review:     '#ce93d8',
+  inactive:   '#4a6070',
+} as const
 
 export const theme = createTheme({
   palette: {
     mode: 'light',
-    primary:    { main: '#F5A800', light: '#FFD04D', dark: '#C98A00', contrastText: '#1a0800' },
-    secondary:  { main: '#7B1C2E', light: '#a8283f', dark: '#550d1e', contrastText: '#fff' },
-    background: { default: '#F7F5F2', paper: '#FFFFFF' },
-    text:       { primary: '#1C0A0E', secondary: '#6B4050' },
+    primary:    { main: C.gold,   light: C.goldLight, dark: C.goldDark, contrastText: '#1a0800' },
+    secondary:  { main: C.maroon, light: C.maroonHover, dark: '#550d1e', contrastText: '#fff' },
+    background: { default: C.appBg, paper: '#FFFFFF' },
+    text:       { primary: C.textDark, secondary: C.textSub },
     success:    { main: '#2e7d32' },
-    warning:    { main: '#F5A800' },
+    warning:    { main: C.gold },
     error:      { main: '#c62828' },
     info:       { main: '#1565c0' },
     divider:    'rgba(123,28,46,0.12)',
@@ -28,10 +86,10 @@ export const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#F7F5F2',
+          backgroundColor: C.appBg,
           '&::-webkit-scrollbar': { width: 6 },
-          '&::-webkit-scrollbar-track': { background: '#F7F5F2' },
-          '&::-webkit-scrollbar-thumb': { background: '#7B1C2E', borderRadius: 3 },
+          '&::-webkit-scrollbar-track': { background: C.appBg },
+          '&::-webkit-scrollbar-thumb': { background: C.maroon, borderRadius: 3 },
         },
       },
     },
@@ -58,20 +116,20 @@ export const theme = createTheme({
         root: { textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.8px', borderRadius: 6 },
         containedPrimary: {
           color: '#1a0800',
-          background: 'linear-gradient(135deg, #F5A800 0%, #C98A00 100%)',
-          '&:hover': { background: 'linear-gradient(135deg, #FFD04D 0%, #F5A800 100%)' },
+          background: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldDark} 100%)`,
+          '&:hover': { background: `linear-gradient(135deg, ${C.goldLight} 0%, ${C.gold} 100%)` },
         },
         containedSecondary: {
           color: '#fff',
-          background: '#7B1C2E',
-          '&:hover': { background: '#a8283f' },
+          background: C.maroon,
+          '&:hover': { background: C.maroonHover },
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#7B1C2E',
+          backgroundColor: C.maroon,
           backgroundImage: 'none',
           boxShadow: '0 2px 8px rgba(123,28,46,0.25)',
         },
@@ -82,7 +140,7 @@ export const theme = createTheme({
         paper: {
           border: 'none',
           borderRight: '1px solid rgba(123,28,46,0.12)',
-          backgroundColor: '#7B1C2E',
+          backgroundColor: C.maroon,
         },
       },
     },
@@ -93,9 +151,9 @@ export const theme = createTheme({
           borderRadius: 0,
           '&.Mui-selected': {
             background: 'rgba(245,168,0,0.15)',
-            borderLeftColor: '#F5A800',
-            '& .MuiListItemIcon-root': { color: '#F5A800' },
-            '& .MuiListItemText-primary': { color: '#F5A800' },
+            borderLeftColor: C.gold,
+            '& .MuiListItemIcon-root': { color: C.gold },
+            '& .MuiListItemText-primary': { color: C.gold },
           },
           '&:hover': { background: 'rgba(255,255,255,0.08)' },
         },
@@ -107,9 +165,9 @@ export const theme = createTheme({
           '& th': {
             fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem',
             letterSpacing: '2px', textTransform: 'uppercase',
-            color: '#6B4050', fontWeight: 700,
-            borderBottom: '2px solid rgba(123,28,46,0.15)',
-            backgroundColor: '#FDF8F9',
+            color: C.mutedBlue, fontWeight: 700,
+            borderBottom: `2px solid rgba(245,168,0,0.15)`,
+            backgroundColor: 'rgba(15,30,46,0.6)',
           },
         },
       },
@@ -118,10 +176,10 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '& tr': {
-            borderBottom: '1px solid rgba(123,28,46,0.07)',
-            '&:hover': { background: 'rgba(123,28,46,0.03)' },
+            borderBottom: `1px solid rgba(245,168,0,0.08)`,
+            '&:hover': { background: 'rgba(245,168,0,0.04)' },
           },
-          '& td': { fontSize: '0.83rem', padding: '11px 16px', color: '#1C0A0E' },
+          '& td': { fontSize: '0.83rem', padding: '11px 16px', color: C.cream },
         },
       },
     },
@@ -130,43 +188,52 @@ export const theme = createTheme({
         root: {
           '& fieldset': { borderColor: 'rgba(123,28,46,0.25)' },
           '&:hover fieldset': { borderColor: 'rgba(123,28,46,0.5) !important' },
-          '&.Mui-focused fieldset': { borderColor: '#7B1C2E !important' },
-          '& input::placeholder': { color: '#9E7080', opacity: 1 },
-          '& textarea::placeholder': { color: '#9E7080', opacity: 1 },
+          '&.Mui-focused fieldset': { borderColor: `${C.maroon} !important` },
+          '& input::placeholder': { color: C.mutedBlue, opacity: 1 },
+          '& textarea::placeholder': { color: C.mutedBlue, opacity: 1 },
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         input: {
-          '&::placeholder': { color: '#9E7080', opacity: 1 },
+          '&::placeholder': { color: C.mutedBlue, opacity: 1 },
         },
       },
     },
     MuiInputLabel: {
-      styleOverrides: { root: { color: '#6B4050', '&.Mui-focused': { color: '#7B1C2E' } } },
+      styleOverrides: { root: { color: C.textSub, '&.Mui-focused': { color: C.maroon } } },
     },
     MuiDialog: {
       styleOverrides: {
-        paper: { backgroundImage: 'none', border: '1px solid rgba(123,28,46,0.15)', boxShadow: '0 8px 32px rgba(123,28,46,0.15)' },
+        paper: {
+          backgroundImage: 'none',
+          backgroundColor: C.dark,
+          border: `1px solid rgba(245,168,0,0.15)`,
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+        },
       },
     },
-    MuiDivider:  { styleOverrides: { root: { borderColor: 'rgba(123,28,46,0.1)' } } },
+    MuiDivider:  { styleOverrides: { root: { borderColor: 'rgba(245,168,0,0.12)' } } },
     MuiAlert:    { styleOverrides: { root: { borderRadius: 6, fontSize: '0.8rem' } } },
     MuiChip:     { styleOverrides: { root: { fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.8px' } } },
-    MuiTab:      { styleOverrides: { root: { fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.68rem' } } },
+    MuiTab:      { styleOverrides: { root: { fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.68rem', color: C.mutedBlue, '&.Mui-selected': { color: C.gold } } } },
+    MuiTabs:     { styleOverrides: { indicator: { backgroundColor: C.gold } } },
     MuiLinearProgress: {
       styleOverrides: {
-        root: { height: 3, borderRadius: 2, background: 'rgba(123,28,46,0.1)' },
-        bar:  { borderRadius: 2, background: 'linear-gradient(90deg, #7B1C2E, #F5A800)' },
+        root: { height: 3, borderRadius: 2, background: `rgba(245,168,0,0.12)` },
+        bar:  { borderRadius: 2, background: `linear-gradient(90deg, ${C.maroon}, ${C.gold})` },
       },
     },
     MuiDialogTitle: {
-      styleOverrides: { root: { fontWeight: 700, fontSize: '1rem', color: '#1C0A0E' } },
+      styleOverrides: { root: { fontWeight: 700, fontSize: '1rem', color: '#fff' } },
+    },
+    MuiDialogContent: {
+      styleOverrides: { root: { color: C.cream } },
     },
     MuiMenuItem: {
       styleOverrides: {
-        root: { fontSize: '0.85rem' },
+        root: { fontSize: '0.85rem', color: C.cream },
       },
     },
   },

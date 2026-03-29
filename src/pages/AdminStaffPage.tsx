@@ -75,8 +75,8 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { bgcolor: '#1a2e45' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(201,149,42,0.2)', pb: 1.5 }}>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(245,168,0,0.2)', pb: 1.5 }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>Create Staff Account</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>New account will be active immediately</Typography>
@@ -88,30 +88,30 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
             <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading}
               InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }}
-              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
               sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' } }}
-              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#1a2e45', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e6c8', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(201,149,42,0.2)', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(245,168,0,0.2)', gap: 1 }}>
         <Button onClick={handleClose} disabled={loading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
         <Button onClick={handleCreate} disabled={loading} variant="contained" startIcon={<PersonAddIcon />} sx={{ fontSize: '0.72rem', minWidth: 160 }}>
           {loading ? 'Creating...' : 'Create Account'}
@@ -172,27 +172,27 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
       {/* Stats */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={6} sm={3}>
-          <Paper sx={{ p: '16px 20px', bgcolor: '#1a2e45' }}>
+          <Paper sx={{ p: '16px 20px', bgcolor: '#0f1e2e' }}>
             <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.7 }}>Total Staff</Typography>
-            <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: '#f5f0e8', lineHeight: 1 }}>{staff.length}</Typography>
+            <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: '#f0e8d0', lineHeight: 1 }}>{staff.length}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper sx={{ p: '16px 20px', bgcolor: '#1a2e45' }}>
+          <Paper sx={{ p: '16px 20px', bgcolor: '#0f1e2e' }}>
             <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.7 }}>Active</Typography>
             <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: '#66bb6a', lineHeight: 1 }}>{activeCount}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
-          <Paper sx={{ p: '16px 20px', bgcolor: '#1a2e45' }}>
+          <Paper sx={{ p: '16px 20px', bgcolor: '#0f1e2e' }}>
             <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.7 }}>Inactive</Typography>
             <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: '#ef5350', lineHeight: 1 }}>{inactiveCount}</Typography>
           </Paper>
         </Grid>
       </Grid>
 
-      <Paper sx={{ bgcolor: '#1a2e45' }}>
-        <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+      <Paper sx={{ bgcolor: '#0f1e2e' }}>
+        <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
           <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>Staff Accounts</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>Manage who can log in and submit documents</Typography>
         </Box>
@@ -223,10 +223,10 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                   <TableRow key={s.uid} sx={{ opacity: toggling === s.uid ? 0.5 : 1 }}>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                        <Box sx={{ width: 30, height: 30, borderRadius: '6px', bgcolor: 'rgba(201,149,42,0.15)', border: '1px solid rgba(201,149,42,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box sx={{ width: 30, height: 30, borderRadius: '6px', bgcolor: 'rgba(245,168,0,0.15)', border: '1px solid rgba(245,168,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#c9952a' }}>{s.displayName?.[0]?.toUpperCase()}</Typography>
                         </Box>
-                        <Typography sx={{ fontSize: '0.82rem', fontWeight: 500, color: '#f5f0e8' }}>{s.displayName}</Typography>
+                        <Typography sx={{ fontSize: '0.82rem', fontWeight: 500, color: '#f0e8d0' }}>{s.displayName}</Typography>
                       </Box>
                     </TableCell>
                     <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.7rem', color: '#4fc3f7' }}>{s.email}</Typography></TableCell>

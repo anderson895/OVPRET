@@ -43,7 +43,7 @@ const fmt = (ts: any): string => {
 const InfoRow: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
   <Box>
     <Typography sx={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.5 }}>{label}</Typography>
-    <Box sx={{ fontSize: '0.82rem', color: '#f5f0e8' }}>{value}</Box>
+    <Box sx={{ fontSize: '0.82rem', color: '#f0e8d0' }}>{value}</Box>
   </Box>
 )
 
@@ -84,8 +84,8 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
   const barColor = doc.status === 'Rejected' ? '#ef5350' : doc.status === 'Approved' ? '#66bb6a' : '#c9952a'
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#1a2e45', maxHeight: '90vh' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e', maxHeight: '90vh' } }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
         <Box sx={{ flex: 1, pr: 2 }}>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '1rem', lineHeight: 1.3, mb: 0.5 }}>{doc.title}</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
@@ -113,7 +113,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
 
       {/* Tabs */}
       <Box sx={{ px: 3, pt: 1.5 }}>
-        <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(201,149,42,0.2)', minHeight: 36 }}>
+        <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(245,168,0,0.2)', minHeight: 36 }}>
           <Tab label="Details" sx={{ minHeight: 36, fontSize: '0.67rem' }} />
           <Tab label="Tracking History" sx={{ minHeight: 36, fontSize: '0.67rem' }} />
           {canAct && <Tab label="VP Action" sx={{ minHeight: 36, fontSize: '0.67rem', color: '#c9952a !important' }} />}
@@ -131,15 +131,15 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
             <Grid item xs={12} sm={6}><InfoRow label="Date Submitted" value={<Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.75rem' }}>{fmt(doc.createdAt)}</Typography>} /></Grid>
             <Grid item xs={12} sm={6}><InfoRow label="Last Updated"  value={<Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.75rem' }}>{fmt(doc.updatedAt)}</Typography>} /></Grid>
             {doc.remarks && (
-              <Grid item xs={12}><InfoRow label="Remarks" value={<Box sx={{ mt: 0.5, p: 1.5, bgcolor: 'rgba(13,27,42,0.5)', borderRadius: 1, borderLeft: '2px solid rgba(201,149,42,0.4)', fontSize: '0.82rem' }}>{doc.remarks}</Box>} /></Grid>
+              <Grid item xs={12}><InfoRow label="Remarks" value={<Box sx={{ mt: 0.5, p: 1.5, bgcolor: 'rgba(15,30,46,0.6)', borderRadius: 1, borderLeft: '2px solid rgba(245,168,0,0.4)', fontSize: '0.82rem' }}>{doc.remarks}</Box>} /></Grid>
             )}
             {doc.feedback && (
-              <Grid item xs={12}><InfoRow label="VP Feedback" value={<Box sx={{ mt: 0.5, p: 1.5, bgcolor: 'rgba(13,27,42,0.5)', borderRadius: 1, borderLeft: '2px solid #c9952a', fontSize: '0.82rem' }}>{doc.feedback}</Box>} /></Grid>
+              <Grid item xs={12}><InfoRow label="VP Feedback" value={<Box sx={{ mt: 0.5, p: 1.5, bgcolor: 'rgba(15,30,46,0.6)', borderRadius: 1, borderLeft: '2px solid #c9952a', fontSize: '0.82rem' }}>{doc.feedback}</Box>} /></Grid>
             )}
             {doc.fileUrl && (
               <Grid item xs={12}>
                 <InfoRow label="Attached File" value={
-                  <Button variant="outlined" size="small" endIcon={<OpenInNewIcon fontSize="small" />} href={doc.fileUrl} target="_blank" rel="noreferrer" sx={{ mt: 0.5, fontSize: '0.7rem', borderColor: 'rgba(201,149,42,0.3)', color: '#c9952a' }}>
+                  <Button variant="outlined" size="small" endIcon={<OpenInNewIcon fontSize="small" />} href={doc.fileUrl} target="_blank" rel="noreferrer" sx={{ mt: 0.5, fontSize: '0.7rem', borderColor: 'rgba(245,168,0,0.3)', color: '#c9952a' }}>
                     {doc.fileName || 'View / Download'}
                   </Button>
                 } />
@@ -147,7 +147,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
             )}
             {/* Email status */}
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', pt: 1, borderTop: '1px solid rgba(201,149,42,0.1)' }}>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', pt: 1, borderTop: '1px solid rgba(245,168,0,0.1)' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                   <EmailIcon sx={{ fontSize: 13, color: doc.emailSentToVP ? '#66bb6a' : '#8fa3b8' }} />
                   <Typography sx={{ fontSize: '0.65rem', color: doc.emailSentToVP ? '#66bb6a' : '#8fa3b8', fontFamily: "'IBM Plex Mono',monospace" }}>
@@ -177,7 +177,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
                   const dotColor = h.action === 'Approved' ? '#66bb6a' : h.action === 'Rejected' ? '#ef5350' : h.action === 'Submitted' ? '#c9952a' : '#4fc3f7'
                   return (
                     <Box key={i} sx={{ display: 'flex', gap: 2, position: 'relative' }}>
-                      {!isLast && <Box sx={{ position: 'absolute', left: 13, top: 28, width: 1, bottom: 0, bgcolor: 'rgba(201,149,42,0.2)', zIndex: 0 }} />}
+                      {!isLast && <Box sx={{ position: 'absolute', left: 13, top: 28, width: 1, bottom: 0, bgcolor: 'rgba(245,168,0,0.2)', zIndex: 0 }} />}
                       <Box sx={{ width: 27, height: 27, borderRadius: '50%', bgcolor: `${dotColor}18`, border: `1px solid ${dotColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, mt: 0.3, zIndex: 1 }}>
                         <Typography sx={{ fontSize: '0.62rem', fontWeight: 700, color: dotColor }}>{i + 1}</Typography>
                       </Box>
@@ -186,7 +186,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
                         <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2 }}>
                           {h.by} — {fmt(h.at)}
                         </Typography>
-                        {h.note && <Box sx={{ mt: 0.8, p: 1.2, bgcolor: 'rgba(13,27,42,0.5)', borderRadius: 1, fontSize: '0.78rem', color: '#8fa3b8' }}>{h.note}</Box>}
+                        {h.note && <Box sx={{ mt: 0.8, p: 1.2, bgcolor: 'rgba(15,30,46,0.6)', borderRadius: 1, fontSize: '0.78rem', color: '#8fa3b8' }}>{h.note}</Box>}
                       </Box>
                     </Box>
                   )
@@ -199,7 +199,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
         {/* VP ACTION */}
         {tab === 2 && canAct && (
           <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, p: 1.5, bgcolor: 'rgba(201,149,42,0.06)', borderRadius: 1, border: '1px solid rgba(201,149,42,0.15)' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, p: 1.5, bgcolor: 'rgba(245,168,0,0.06)', borderRadius: 1, border: '1px solid rgba(245,168,0,0.15)' }}>
               <EmailIcon sx={{ fontSize: 14, color: '#c9952a' }} />
               <Typography sx={{ fontSize: '0.7rem', color: '#8fa3b8' }}>
                 Staff will be notified via <strong style={{ color: '#c9952a' }}>Brevo email</strong> upon Approve, Reject, or Request for Revision.
@@ -217,7 +217,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
               placeholder="Enter your feedback. Required for Reject and Request Revision."
               sx={{ mb: 3 }}
               InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }}
-              inputProps={{ style: { fontSize: '0.82rem', color: '#f0e6c8' } }}
+              inputProps={{ style: { fontSize: '0.82rem', color: '#f0e8d0' } }}
             />
 
             <Divider sx={{ mb: 2.5 }} />
@@ -254,7 +254,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
         )}
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 2.5, pt: 1.5, borderTop: '1px solid rgba(201,149,42,0.2)' }}>
+      <DialogActions sx={{ px: 3, pb: 2.5, pt: 1.5, borderTop: '1px solid rgba(245,168,0,0.2)' }}>
         <Button onClick={onClose} variant="outlined" sx={{ fontSize: '0.72rem' }}>Close</Button>
       </DialogActions>
     </Dialog>

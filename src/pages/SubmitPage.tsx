@@ -70,13 +70,13 @@ export const SubmitPage: React.FC<Props> = ({ documents, user }) => {
       {/* Quick Stats */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         {[
-          { label: 'My Documents', value: counts.total, color: '#f5f0e8' },
+          { label: 'My Documents', value: counts.total, color: '#f0e8d0' },
           { label: 'Pending Approval', value: counts.pending, color: '#ffa726' },
           { label: 'Approved', value: counts.approved, color: '#66bb6a' },
           { label: 'For Revision', value: counts.revision, color: '#4fc3f7' },
         ].map((s) => (
           <Grid item xs={6} sm={3} key={s.label}>
-            <Paper sx={{ p: '16px 20px', bgcolor: '#1a2e45' }}>
+            <Paper sx={{ p: '16px 20px', bgcolor: '#0f1e2e' }}>
               <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.8 }}>
                 {s.label}
               </Typography>
@@ -89,8 +89,8 @@ export const SubmitPage: React.FC<Props> = ({ documents, user }) => {
       </Grid>
 
       {/* My Documents Table */}
-      <Paper sx={{ bgcolor: '#1a2e45' }}>
-        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+      <Paper sx={{ bgcolor: '#0f1e2e' }}>
+        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
           <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>My Submitted Documents</Typography>
           <Typography sx={{ fontSize: '0.65rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace", letterSpacing: 1 }}>
             Track the status of your RET documents
@@ -131,7 +131,7 @@ export const SubmitPage: React.FC<Props> = ({ documents, user }) => {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography sx={{ fontWeight: 500, fontSize: '0.8rem', color: '#f5f0e8', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <Typography sx={{ fontWeight: 500, fontSize: '0.8rem', color: '#f0e8d0', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {doc.title}
                       </Typography>
                     </TableCell>

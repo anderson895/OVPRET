@@ -25,17 +25,17 @@ const fmtDate = (ts: any) => {
 }
 
 const StatCard: React.FC<{ label: string; value: number; color?: string }> = ({ label, value, color }) => (
-  <Paper sx={{ p: '14px 20px', bgcolor: '#1a2e45' }}>
+  <Paper sx={{ p: '14px 20px', bgcolor: '#0f1e2e' }}>
     <Typography sx={{ fontSize: '0.56rem', fontWeight: 700, letterSpacing: '2px', color: '#8fa3b8', textTransform: 'uppercase', mb: 0.6 }}>{label}</Typography>
-    <Typography sx={{ fontSize: '1.7rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: color || '#f5f0e8', lineHeight: 1 }}>{value}</Typography>
+    <Typography sx={{ fontSize: '1.7rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: color || '#f0e8d0', lineHeight: 1 }}>{value}</Typography>
   </Paper>
 )
 
 const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void; badge?: number }> = ({ label, active, onClick, badge }) => (
-  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : 'rgba(201,149,42,0.2)', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? 'rgba(201,149,42,0.08)' : 'transparent', display: 'flex', alignItems: 'center', gap: 0.8 }}>
+  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : 'rgba(245,168,0,0.2)', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? 'rgba(245,168,0,0.08)' : 'transparent', display: 'flex', alignItems: 'center', gap: 0.8 }}>
     {label}
     {badge != null && badge > 0 && (
-      <Box sx={{ bgcolor: '#ffa726', color: '#0d1b2a', borderRadius: 0.5, px: 0.6, py: 0.1, fontSize: '0.55rem', fontWeight: 800, lineHeight: 1.4 }}>{badge}</Box>
+      <Box sx={{ bgcolor: '#ffa726', color: '#0f1e2e', borderRadius: 0.5, px: 0.6, py: 0.1, fontSize: '0.55rem', fontWeight: 800, lineHeight: 1.4 }}>{badge}</Box>
     )}
   </Box>
 )
@@ -70,11 +70,11 @@ export const ReviewPage: React.FC<Props> = ({ documents, user }) => {
         <Grid item xs={6} sm={4} md={2.4}><StatCard label="For Revision" value={counts.revision} color="#4fc3f7" /></Grid>
       </Grid>
 
-      <Paper sx={{ bgcolor: '#1a2e45' }}>
-        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid rgba(201,149,42,0.2)' }}>
+      <Paper sx={{ bgcolor: '#0f1e2e' }}>
+        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
           <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Document Review Queue</Typography>
         </Box>
-        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(201,149,42,0.2)', display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(245,168,0,0.2)', display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {STATUSES.map((s) => <FilterChip key={s} label={s} active={filter === s} onClick={() => setFilter(s)} badge={s === 'Pending' ? counts.pending : undefined} />)}
         </Box>
 
@@ -105,7 +105,7 @@ export const ReviewPage: React.FC<Props> = ({ documents, user }) => {
                     <TableCell><Typography sx={{ fontWeight: 500, fontSize: '0.8rem', maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.title}</Typography></TableCell>
                     <TableCell><Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8' }}>{doc.type}</Typography></TableCell>
                     <TableCell>
-                      <Typography sx={{ fontSize: '0.78rem', color: '#f5f0e8' }}>{doc.submittedBy}</Typography>
+                      <Typography sx={{ fontSize: '0.78rem', color: '#f0e8d0' }}>{doc.submittedBy}</Typography>
                       <Typography sx={{ fontSize: '0.65rem', color: '#8fa3b8', fontFamily: "'IBM Plex Mono',monospace" }}>{doc.submittedByEmail}</Typography>
                     </TableCell>
                     <TableCell><Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.department}</Typography></TableCell>
