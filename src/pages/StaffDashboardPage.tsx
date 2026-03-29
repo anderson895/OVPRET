@@ -90,7 +90,7 @@ export const StaffDashboardPage: React.FC<Props> = ({ documents, user, onNavigat
               {greeting}
             </Typography>
             <Typography sx={{ fontSize: '1.3rem', fontWeight: 800, color: '#fff', mb: 0.3 }}>
-              {user.displayName} 👋
+              {user.displayName}
             </Typography>
             <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8' }}>
               {user.department || 'Staff Member'} · OVPRET Document Tracking System
