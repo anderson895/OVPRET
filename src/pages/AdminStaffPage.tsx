@@ -82,28 +82,44 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
       <DialogContent sx={{ pt: 3 }}>
         {loading && <LinearProgress sx={{ mb: 2 }} />}
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-        <Grid container spacing={2}>
+        <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
           <Grid item xs={12}>
-            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading}
+              InputLabelProps={{ shrink: true }}
+              placeholder="e.g. Juan dela Cruz"
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading}
+              InputLabelProps={{ shrink: true }}
+              placeholder="staff@ovpret.edu.ph"
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12}>
             <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading}
-              InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }}
+              InputLabelProps={{ shrink: true }}
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: '#f0e8d0', fontSize: '0.85rem' } }}
-              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
+              SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading}
+              InputLabelProps={{ shrink: true }}
+              placeholder="Min. 8 characters"
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
+            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading}
+              InputLabelProps={{ shrink: true }}
+              placeholder="Re-enter password"
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
         </Grid>
       </DialogContent>
