@@ -22,7 +22,9 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!user) return
     const unsubDocs = listenDocuments((docs) => setDocuments(docs), { role: user.role, uid: user.uid })
-    const unsubLogs = listenLogs((l) => setLogs(l))
+    const unsubLogs = (user.role === 'admin' || user.role === 'vp')
+      ? listenLogs((l) => setLogs(l))
+      : () => {}
     return () => { unsubDocs(); unsubLogs() }
   }, [user])
 

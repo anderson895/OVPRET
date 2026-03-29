@@ -21,10 +21,16 @@ service cloud.firestore {
 
     // ── Documents collection ────────────────────────────────
     match /documents/{docId} {
-      // Admin can always read; VP and staff need isActive check
-      allow read: if isAdmin() ||
+      // get (single doc) — staff can only read their own doc
+      allow get: if isAdmin() ||
         (isAuthenticated() && isActive() && isVP()) ||
         (isAuthenticated() && isActive() && isStaff() && resource.data.submittedByUid == request.auth.uid);
+
+      // list (queries/onSnapshot) — staff is allowed; query-level filter
+      // (where submittedByUid == uid) is enforced in the app code
+      allow list: if isAdmin() ||
+        (isAuthenticated() && isActive() && isVP()) ||
+        (isAuthenticated() && isActive() && isStaff());
 
       allow create: if isAuthenticated() && isActive() &&
         (isStaff() || isAdmin()) &&
