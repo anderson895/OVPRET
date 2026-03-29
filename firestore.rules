@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Documents collection
+    match /documents/{docId} {
+      // Any authenticated user can read documents
+      allow read: if request.auth != null;
+
+      // Any authenticated user can create a new document
+      allow create: if request.auth != null
+        && request.resource.data.submittedByEmail == request.auth.token.email;
+
+      // Only the submitter OR a VP can update a document
+      allow update: if request.auth != null
+        && (
+          resource.data.submittedByEmail == request.auth.token.email
+          || request.auth.token.role == 'vp'
+        );
+
+      // Only admins can delete
+      allow delete: if request.auth != null
+        && request.auth.token.role == 'admin';
+    }
+
+    // Transaction logs — append-only for authenticated users
+    match /logs/{logId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if false; // Immutable logs
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
