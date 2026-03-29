@@ -192,7 +192,7 @@ export const Layout: React.FC<Props> = ({
         <SidebarContent />
       </Drawer>
 
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', ml: { md: `${DRAWER_WIDTH}px` } }}>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         {/* AppBar */}
         <AppBar position="sticky" elevation={0}>
           <Toolbar sx={{ minHeight: '56px !important', px: { xs: 2, md: 4 }, justifyContent: 'space-between' }}>
