@@ -27,8 +27,9 @@ export type DocType =
   | 'Extension'
   | 'Technology'
   | 'Financial'
+  | 'Proposal'
   | 'Administrative'
-  | 'MOU/MOA'
+  | 'MOA'
   | 'Other'
 
 export interface HistoryEntry {

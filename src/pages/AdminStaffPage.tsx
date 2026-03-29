@@ -39,13 +39,9 @@ const fmtDate = (ts: any) => {
 }
 
 const DEPARTMENTS = [
-  'Research & Development Office',
-  'Community Extension Services',
-  'Technology Transfer & Business Development',
-  'Finance Office',
-  'Office of the VP for Research, Extension & Technology',
-  'Academic Affairs Office',
-  'Other',
+  'Office of the Research Director',
+  'Office of the Knowledge Technology Transfer',
+  'Office of the Extension Director',
 ]
 
 const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess: () => void; adminEmail: string }> = ({ open, onClose, onSuccess, adminEmail }) => {

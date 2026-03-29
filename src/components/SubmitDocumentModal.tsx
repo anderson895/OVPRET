@@ -25,15 +25,11 @@ interface Props {
   onSuccess: (retId: string) => void; user: AppUser
 }
 
-const DOC_TYPES = ['Research','Extension','Technology','Financial','Administrative','MOU/MOA','Other']
+const DOC_TYPES = ['Research','Extension','Technology','Financial','Proposal','Administrative','MOA','Other']
 const DEPARTMENTS = [
-  'Research & Development Office',
-  'Community Extension Services',
-  'Technology Transfer & Business Development',
-  'Finance Office',
-  'Office of the VP for Research, Extension & Technology',
-  'Academic Affairs Office',
-  'Other',
+  'Office of the Research Director',
+  'Office of the Knowledge Technology Transfer',
+  'Office of the Extension Director',
 ]
 
 export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess, user }) => {
