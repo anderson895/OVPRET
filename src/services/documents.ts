@@ -1,7 +1,7 @@
 import type { RETDocument, TransactionLog, StaffAccount, DocStatus } from '../types'
 import {
   db, collection, addDoc, doc, updateDoc,
-  onSnapshot, query, orderBy, serverTimestamp, setDoc,
+  onSnapshot, query, orderBy, where, serverTimestamp, setDoc,
   createAuthUserSafely,
 } from './firebase'
 import { notifyVPNewDocument, notifyStaffDecision } from './brevo'
@@ -19,8 +19,14 @@ async function addLog(data: Omit<TransactionLog, 'id' | 'at'>): Promise<void> {
 }
 
 // ── Real-time listeners ───────────────────────────────────────
-export function listenDocuments(cb: (docs: RETDocument[]) => void): () => void {
-  const q = query(collection(db, 'documents'), orderBy('createdAt', 'desc'))
+export function listenDocuments(
+  cb: (docs: RETDocument[]) => void,
+  opts?: { role?: string; uid?: string }
+): () => void {
+  // Staff can only read their own documents — enforced both here and in Firestore rules
+  const q = opts?.role === 'staff' && opts?.uid
+    ? query(collection(db, 'documents'), where('submittedByUid', '==', opts.uid), orderBy('createdAt', 'desc'))
+    : query(collection(db, 'documents'), orderBy('createdAt', 'desc'))
   return onSnapshot(q, (snap) => cb(snap.docs.map((d) => ({ id: d.id, ...d.data() } as RETDocument))))
 }
 
