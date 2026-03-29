@@ -21,7 +21,7 @@ interface Props { user: AppUser }
 
 const SectionHeader: React.FC<{ icon: React.ReactNode; title: string; subtitle: string }> = ({ icon, title, subtitle }) => (
   <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, mb: 3 }}>
-    <Box sx={{ p: 1, bgcolor: 'rgba(245,168,0,0.1)', borderRadius: '8px', color: '#F5A800', display: 'flex' }}>{icon}</Box>
+    <Box sx={{ p: 1, bgcolor: '#1a2535', borderRadius: '8px', color: '#F5A800', display: 'flex' }}>{icon}</Box>
     <Box>
       <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '0.92rem' }}>{title}</Typography>
       <Typography sx={{ fontSize: '0.72rem', color: '#8fa3b8', mt: 0.2 }}>{subtitle}</Typography>
@@ -75,12 +75,12 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
             <SectionHeader icon={<PersonIcon fontSize="small" />} title="Profile Information" subtitle="Your account details" />
 
             {/* Avatar */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 3, mb: 3, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 3, mb: 3, bgcolor: '#090f1a', borderRadius: 2 }}>
               <Avatar sx={{
                 width: 80, height: 80, bgcolor: '#7B1C2E',
                 fontSize: '2rem', fontWeight: 800, mb: 1.5,
                 border: '3px solid rgba(245,168,0,0.3)',
-                boxShadow: '0 4px 20px rgba(123,28,46,0.4)',
+                boxShadow: '0 4px 20px #1e1218',
               }}>
                 {user.displayName?.[0]?.toUpperCase() || 'U'}
               </Avatar>
@@ -92,13 +92,13 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
               </Box>
             </Box>
 
-            <Divider sx={{ borderColor: 'rgba(245,168,0,0.15)', mb: 2.5 }} />
+            <Divider sx={{ borderColor: '#1e2a38', mb: 2.5 }} />
 
             {/* Info rows */}
             {[
               { icon: <BadgeIcon sx={{ fontSize: 16 }} />, label: 'Full Name', value: user.displayName },
               { icon: <EmailIcon sx={{ fontSize: 16 }} />, label: 'Email Address', value: user.email },
-              { icon: <BusinessIcon sx={{ fontSize: 16 }} />, label: 'Department', value: user.department || 'Not specified' },
+              ...(user.department ? [{ icon: <BusinessIcon sx={{ fontSize: 16 }} />, label: 'Department', value: user.department }] : []),
             ].map((row) => (
               <Box key={row.label} sx={{ display: 'flex', gap: 1.5, mb: 2.5, alignItems: 'flex-start' }}>
                 <Box sx={{ color: '#c9952a', mt: 0.2 }}>{row.icon}</Box>
@@ -111,7 +111,7 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
               </Box>
             ))}
 
-            <Divider sx={{ borderColor: 'rgba(245,168,0,0.15)', my: 2 }} />
+            <Divider sx={{ borderColor: '#1e2a38', my: 2 }} />
             <Typography sx={{ fontSize: '0.68rem', color: 'rgba(143,163,184,0.5)', fontStyle: 'italic', lineHeight: 1.6 }}>
               Profile information is managed by the system administrator. Contact admin to update your name or department.
             </Typography>
@@ -146,7 +146,7 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
                 />
               </Box>
 
-              <Divider sx={{ borderColor: 'rgba(245,168,0,0.1)' }} />
+              <Divider sx={{ borderColor: '#1a2535' }} />
 
               <Box>
                 <Typography sx={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '1.5px', color: 'rgba(245,168,0,0.7)', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace", mb: 0.8 }}>
@@ -185,9 +185,9 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
               </Box>
             </Box>
 
-            <Divider sx={{ borderColor: 'rgba(245,168,0,0.1)', my: 3 }} />
+            <Divider sx={{ borderColor: '#1a2535', my: 3 }} />
 
-            <Box sx={{ p: 2, bgcolor: 'rgba(245,168,0,0.05)', borderRadius: 1.5, border: '1px solid rgba(245,168,0,0.1)' }}>
+            <Box sx={{ p: 2, bgcolor: '#141f2a', borderRadius: 1.5, border: '1px solid #1a2535' }}>
               <Typography sx={{ fontSize: '0.68rem', fontWeight: 700, color: '#c9952a', mb: 0.8, letterSpacing: '0.5px' }}>
                 Password Requirements
               </Typography>

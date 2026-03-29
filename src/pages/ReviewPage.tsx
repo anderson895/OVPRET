@@ -32,7 +32,7 @@ const StatCard: React.FC<{ label: string; value: number; color?: string }> = ({ 
 )
 
 const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void; badge?: number }> = ({ label, active, onClick, badge }) => (
-  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : 'rgba(245,168,0,0.2)', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? 'rgba(245,168,0,0.08)' : 'transparent', display: 'flex', alignItems: 'center', gap: 0.8 }}>
+  <Box onClick={onClick} sx={{ px: 1.5, py: 0.4, borderRadius: 0.8, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase', cursor: 'pointer', border: '1px solid', transition: 'all 0.15s', borderColor: active ? '#c9952a' : '#243040', color: active ? '#c9952a' : '#8fa3b8', bgcolor: active ? '#162230' : 'transparent', display: 'flex', alignItems: 'center', gap: 0.8 }}>
     {label}
     {badge != null && badge > 0 && (
       <Box sx={{ bgcolor: '#ffa726', color: '#0f1e2e', borderRadius: 0.5, px: 0.6, py: 0.1, fontSize: '0.55rem', fontWeight: 800, lineHeight: 1.4 }}>{badge}</Box>
@@ -71,10 +71,10 @@ export const ReviewPage: React.FC<Props> = ({ documents, user }) => {
       </Grid>
 
       <Paper sx={{ bgcolor: '#0f1e2e' }}>
-        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+        <Box sx={{ p: '18px 24px 14px', borderBottom: '1px solid #243040' }}>
           <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Document Review Queue</Typography>
         </Box>
-        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(245,168,0,0.2)', display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box sx={{ px: 3, py: 2, borderBottom: '1px solid #243040', display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {STATUSES.map((s) => <FilterChip key={s} label={s} active={filter === s} onClick={() => setFilter(s)} badge={s === 'Pending' ? counts.pending : undefined} />)}
         </Box>
 
@@ -124,7 +124,7 @@ export const ReviewPage: React.FC<Props> = ({ documents, user }) => {
         )}
       </Paper>
 
-      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => setSelected(null)} user={user} />
+      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => setSelected(null)} user={user}  />
     </Box>
   )
 }

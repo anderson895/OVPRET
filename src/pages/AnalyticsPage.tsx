@@ -25,7 +25,7 @@ const BarChart: React.FC<{ data: Record<string,number>; colors?: string[] }> = (
       {entries.map(([key, val], i) => (
         <Box key={key} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Typography sx={{ fontSize: '0.7rem', color: '#8fa3b8', width: 130, flexShrink: 0, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{key}</Typography>
-          <Box sx={{ flex: 1, height: 10, bgcolor: 'rgba(245,168,0,0.08)', borderRadius: 1, overflow: 'hidden' }}>
+          <Box sx={{ flex: 1, height: 10, bgcolor: '#162230', borderRadius: 1, overflow: 'hidden' }}>
             <Box sx={{ height: '100%', width: `${(val / maxVal) * 100}%`, bgcolor: colors[i % colors.length], borderRadius: 1, transition: 'width 0.8s ease' }} />
           </Box>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.7rem', color: colors[i % colors.length], width: 24, textAlign: 'right' }}>{val}</Typography>
@@ -86,7 +86,7 @@ export const AnalyticsPage: React.FC<Props> = ({ documents }) => {
       <Grid container spacing={2.5}>
         <Grid item xs={12} md={6}>
           <Paper sx={{ bgcolor: '#0f1e2e', p: 0 }}>
-            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
               <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>By Approval Status</Typography>
             </Box>
             <Box sx={{ p: 3 }}><BarChart data={a.byStatus} colors={['#ffa726','#ce93d8','#66bb6a','#ef5350','#4fc3f7']} /></Box>
@@ -94,7 +94,7 @@ export const AnalyticsPage: React.FC<Props> = ({ documents }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper sx={{ bgcolor: '#0f1e2e', p: 0 }}>
-            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
               <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>By Document Type</Typography>
             </Box>
             <Box sx={{ p: 3 }}><BarChart data={a.byType} /></Box>
@@ -102,7 +102,7 @@ export const AnalyticsPage: React.FC<Props> = ({ documents }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper sx={{ bgcolor: '#0f1e2e', p: 0 }}>
-            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
               <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>By Staff Member</Typography>
             </Box>
             <Box sx={{ p: 3 }}><BarChart data={a.byStaff} colors={['#4fc3f7','#ce93d8','#ffa726','#66bb6a','#c9952a']} /></Box>
@@ -110,7 +110,7 @@ export const AnalyticsPage: React.FC<Props> = ({ documents }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper sx={{ bgcolor: '#0f1e2e', p: 0 }}>
-            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+            <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
               <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>Status Summary</Typography>
             </Box>
             <Table size="small">

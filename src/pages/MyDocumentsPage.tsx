@@ -15,9 +15,11 @@ import InputAdornment from '@mui/material/InputAdornment'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import SearchIcon from '@mui/icons-material/Search'
+import EditIcon from '@mui/icons-material/Edit'
 import type { RETDocument, AppUser } from '../types'
 import { StatusChip } from '../components/StatusChip'
 import { DocumentDetailModal } from '../components/DocumentDetailModal'
+import { EditDocumentModal } from '../components/EditDocumentModal'
 
 interface Props { documents: RETDocument[]; user: AppUser }
 
@@ -31,6 +33,7 @@ const STATUSES = ['All', 'Pending', 'Under Review', 'Approved', 'Rejected', 'Req
 
 export const MyDocumentsPage: React.FC<Props> = ({ documents, user }) => {
   const [selected, setSelected] = useState<RETDocument | null>(null)
+  const [editDoc, setEditDoc] = useState<RETDocument | null>(null)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('All')
 
@@ -85,7 +88,7 @@ export const MyDocumentsPage: React.FC<Props> = ({ documents, user }) => {
 
       {/* Table */}
       <Paper sx={{ bgcolor: '#0f1e2e', borderRadius: 2, overflow: 'hidden' }}>
-        <Box sx={{ p: '16px 24px', borderBottom: '1px solid rgba(245,168,0,0.15)', display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
+        <Box sx={{ p: '16px 24px', borderBottom: '1px solid #1e2a38', display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
           <TextField
             size="small" placeholder="Search title, RET ID, department…"
             value={search} onChange={(e) => setSearch(e.target.value)}
@@ -98,7 +101,7 @@ export const MyDocumentsPage: React.FC<Props> = ({ documents, user }) => {
             size="small" value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             sx={{ fontSize: '0.78rem', minWidth: 160, color: '#f0e8d0',
-              '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(245,168,0,0.2)' },
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: '#243040' },
               '& .MuiSvgIcon-root': { color: '#8fa3b8' },
             }}
           >
@@ -150,7 +153,10 @@ export const MyDocumentsPage: React.FC<Props> = ({ documents, user }) => {
                         : <Typography sx={{ fontSize: '0.68rem', color: 'rgba(143,163,184,0.35)', fontStyle: 'italic' }}>No feedback yet</Typography>}
                     </TableCell>
                     <TableCell>
-                      <Button variant="outlined" size="small" onClick={(e) => { e.stopPropagation(); setSelected(doc) }} sx={{ fontSize: '0.62rem', py: 0.3, px: 1.2 }}>View</Button>
+                      <Box sx={{ display: 'flex', gap: 0.8 }}>
+                        <Button variant="outlined" size="small" onClick={(e) => { e.stopPropagation(); setSelected(doc) }} sx={{ fontSize: '0.62rem', py: 0.3, px: 1.2 }}>View</Button>
+                        <Button variant="outlined" size="small" startIcon={<EditIcon sx={{ fontSize: '0.7rem !important' }} />} onClick={(e) => { e.stopPropagation(); setEditDoc(doc) }} sx={{ fontSize: '0.62rem', py: 0.3, px: 1.2, borderColor: 'rgba(245,168,0,0.3)', color: '#c9952a', '&:hover': { borderColor: '#c9952a', bgcolor: '#162030' } }}>Edit</Button>
+                      </Box>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -161,6 +167,7 @@ export const MyDocumentsPage: React.FC<Props> = ({ documents, user }) => {
       </Paper>
 
       <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => setSelected(null)} user={user} />
+      <EditDocumentModal document={editDoc} open={!!editDoc} onClose={() => setEditDoc(null)} onSuccess={() => setEditDoc(null)} user={user} />
     </Box>
   )
 }

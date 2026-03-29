@@ -54,8 +54,8 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
     <Box>
       <Paper sx={{
         bgcolor: '#0f1e2e', p: '20px 28px', mb: 3,
-        background: 'linear-gradient(135deg, #0f1e2e 60%, rgba(123,28,46,0.25) 100%)',
-        border: '1px solid rgba(245,168,0,0.15)', borderRadius: 2,
+        background: 'linear-gradient(135deg, #0f1e2e 60%, #221418 100%)',
+        border: '1px solid #1e2a38', borderRadius: 2,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2,
       }}>
         <Box>
@@ -67,7 +67,7 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
         </Box>
         {counts.pending > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-            <Box sx={{ px: 2, py: 1, bgcolor: 'rgba(255,167,38,0.15)', border: '1px solid rgba(255,167,38,0.3)', borderRadius: 1.5 }}>
+            <Box sx={{ px: 2, py: 1, bgcolor: '#1e2a10', border: '1px solid rgba(255,167,38,0.3)', borderRadius: 1.5 }}>
               <Typography sx={{ fontSize: '0.7rem', color: '#ffa726', fontWeight: 700 }}>
                 🔔 {counts.pending} document{counts.pending > 1 ? 's' : ''} awaiting your review
               </Typography>
@@ -102,7 +102,7 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
       <Grid container spacing={3}>
         <Grid item xs={12} md={7}>
           <Paper sx={{ bgcolor: '#0f1e2e', borderRadius: 2, overflow: 'hidden' }}>
-            <Box sx={{ p: '18px 24px', borderBottom: '1px solid rgba(245,168,0,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box sx={{ p: '18px 24px', borderBottom: '1px solid #1e2a38', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
                 <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '0.88rem' }}>Pending Action Queue</Typography>
                 <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>Documents awaiting your decision</Typography>
@@ -122,9 +122,9 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
             ) : needsAction.slice(0, 5).map((doc, i) => (
               <Box key={doc.id} sx={{
                 px: 3, py: 2,
-                borderBottom: i < Math.min(needsAction.length, 5) - 1 ? '1px solid rgba(245,168,0,0.08)' : 'none',
+                borderBottom: i < Math.min(needsAction.length, 5) - 1 ? '1px solid #162230' : 'none',
                 display: 'flex', alignItems: 'center', gap: 2,
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }, cursor: 'pointer',
+                '&:hover': { bgcolor: '#121e2d' }, cursor: 'pointer',
               }} onClick={() => setSelected(doc)}>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography sx={{ fontWeight: 600, color: '#f0e8d0', fontSize: '0.82rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.title}</Typography>
@@ -155,7 +155,7 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
             ) : typeBreakdown.map((t) => (
               <Box key={t.type} sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1.5 }}>
                 <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', width: 110, flexShrink: 0 }}>{t.type}</Typography>
-                <Box sx={{ flex: 1, height: 6, bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+                <Box sx={{ flex: 1, height: 6, bgcolor: '#162030', borderRadius: 3, overflow: 'hidden' }}>
                   <Box sx={{ height: '100%', width: `${counts.total > 0 ? (t.count / counts.total) * 100 : 0}%`, bgcolor: '#c9952a', borderRadius: 3 }} />
                 </Box>
                 <Typography sx={{ fontSize: '0.7rem', color: '#c9952a', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 700, width: 24, textAlign: 'right' }}>{t.count}</Typography>
@@ -164,7 +164,7 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
           </Paper>
 
           <Paper sx={{ bgcolor: '#0f1e2e', borderRadius: 2, overflow: 'hidden' }}>
-            <Box sx={{ p: '18px 24px', borderBottom: '1px solid rgba(245,168,0,0.15)' }}>
+            <Box sx={{ p: '18px 24px', borderBottom: '1px solid #1e2a38' }}>
               <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '0.88rem' }}>Recent Decisions</Typography>
               <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>Your latest actions</Typography>
             </Box>
@@ -175,9 +175,9 @@ export const VPDashboardPage: React.FC<Props> = ({ documents, user, onNavigate }
             ) : recentDecisions.map((doc, i) => (
               <Box key={doc.id} sx={{
                 px: 3, py: 1.8,
-                borderBottom: i < recentDecisions.length - 1 ? '1px solid rgba(245,168,0,0.06)' : 'none',
+                borderBottom: i < recentDecisions.length - 1 ? '1px solid #162030' : 'none',
                 display: 'flex', alignItems: 'center', gap: 1.5,
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }, cursor: 'pointer',
+                '&:hover': { bgcolor: '#121e2d' }, cursor: 'pointer',
               }} onClick={() => setSelected(doc)}>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography sx={{ fontSize: '0.78rem', color: '#f0e8d0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 500 }}>{doc.title}</Typography>

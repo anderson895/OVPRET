@@ -17,6 +17,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile'
 import RateReviewIcon from '@mui/icons-material/RateReview'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import HistoryIcon from '@mui/icons-material/History'
+import GavelIcon from '@mui/icons-material/Gavel'
 import PeopleIcon from '@mui/icons-material/People'
 import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -24,7 +25,7 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import SettingsIcon from '@mui/icons-material/Settings'
 import type { AppUser } from '../types'
 
-export type PageId = 'dashboard' | 'submit' | 'review' | 'analytics' | 'logs' | 'staff' | 'my-documents' | 'profile'
+export type PageId = 'dashboard' | 'submit' | 'review' | 'analytics' | 'logs' | 'staff' | 'my-documents' | 'profile' | 'vp-decisions'
 
 const DRAWER_WIDTH = 268
 
@@ -41,14 +42,15 @@ interface Props {
 }
 
 export const PAGE_TITLES: Record<PageId, string> = {
-  dashboard:    'Dashboard',
-  submit:       'Submit RET Document',
-  review:       'Review & Process Documents',
-  analytics:    'Document Analytics',
-  logs:         'Transaction Logs & History',
-  staff:        'Staff Account Management',
+  dashboard:      'Dashboard',
+  submit:         'Submit RET Document',
+  review:         'Review & Process Documents',
+  analytics:      'Document Analytics',
+  logs:           'Transaction Logs & History',
+  staff:          'Staff Account Management',
   'my-documents': 'My Documents',
-  profile:      'Profile & Settings',
+  profile:        'Profile & Settings',
+  'vp-decisions': 'My Decisions',
 }
 
 export const Layout: React.FC<Props> = ({
@@ -61,6 +63,7 @@ export const Layout: React.FC<Props> = ({
     { id: 'submit',        label: 'Submit Document',    icon: <UploadFileIcon fontSize="small" />, roles: ['staff'] },
     { id: 'my-documents',  label: 'My Documents',       icon: <FolderOpenIcon fontSize="small" />, roles: ['staff'] },
     { id: 'review',        label: 'Review Documents',   icon: <RateReviewIcon fontSize="small" />, roles: ['vp'], badge: pendingCount },
+    { id: 'vp-decisions',  label: 'My Decisions',       icon: <GavelIcon      fontSize="small" />, roles: ['vp'] },
     { id: 'analytics',     label: 'Analytics',          icon: <BarChartIcon   fontSize="small" />, roles: ['admin'] },
     { id: 'logs',          label: 'Logs & History',     icon: <HistoryIcon    fontSize="small" />, roles: ['admin'] },
     { id: 'staff',         label: 'Manage Staff',       icon: <PeopleIcon     fontSize="small" />, roles: ['admin'] },
@@ -78,7 +81,7 @@ export const Layout: React.FC<Props> = ({
             borderRadius: '50%', border: '2px solid rgba(245,168,0,0.5)',
             overflow: 'hidden', bgcolor: '#fff',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            boxShadow: '0 2px 8px #090f1a',
           }}>
             <img src="/logo.png" alt="MSU" style={{ width: '92%', height: '92%', objectFit: 'contain' }} />
           </Box>
@@ -110,8 +113,8 @@ export const Layout: React.FC<Props> = ({
                 sx={{
                   px: '16px', py: '8px', minHeight: 40,
                   borderLeft: `3px solid ${active ? '#F5A800' : 'transparent'}`,
-                  bgcolor: active ? 'rgba(245,168,0,0.12)' : 'transparent',
-                  '&:hover': { bgcolor: 'rgba(255,255,255,0.07)' },
+                  bgcolor: active ? '#1b2636' : 'transparent',
+                  '&:hover': { bgcolor: '#192535' },
                 }}
               >
                 <ListItemIcon sx={{ minWidth: 30, color: active ? '#F5A800' : 'rgba(255,255,255,0.55)' }}>
@@ -140,7 +143,7 @@ export const Layout: React.FC<Props> = ({
         <List disablePadding>
           <ListItemButton
             onClick={onLogout}
-            sx={{ px: '16px', py: '8px', borderLeft: '3px solid transparent', '&:hover': { bgcolor: 'rgba(255,255,255,0.07)' } }}
+            sx={{ px: '16px', py: '8px', borderLeft: '3px solid transparent', '&:hover': { bgcolor: '#192535' } }}
           >
             <ListItemIcon sx={{ minWidth: 30, color: 'rgba(255,255,255,0.55)' }}><LogoutIcon fontSize="small" /></ListItemIcon>
             <ListItemText primary="Sign Out" primaryTypographyProps={{ fontSize: '0.82rem', fontWeight: 400, color: 'rgba(255,255,255,0.75)' }} />
@@ -150,7 +153,7 @@ export const Layout: React.FC<Props> = ({
 
       <Box sx={{
         p: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.1)',
-        bgcolor: 'rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: 1.5,
+        bgcolor: '#0a1520', display: 'flex', alignItems: 'center', gap: 1.5,
       }}>
         <Avatar sx={{
           width: 34, height: 34, bgcolor: '#F5A800',
@@ -195,7 +198,7 @@ export const Layout: React.FC<Props> = ({
               <Typography sx={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.62rem', color: 'rgba(255,255,255,0.55)', display: { xs: 'none', sm: 'block' } }}>
                 {new Date().toLocaleDateString('en-PH', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
               </Typography>
-              <Box sx={{ px: 1.2, py: 0.4, borderRadius: '4px', bgcolor: 'rgba(245,168,0,0.2)', border: '1px solid rgba(245,168,0,0.35)' }}>
+              <Box sx={{ px: 1.2, py: 0.4, borderRadius: '4px', bgcolor: '#243040', border: '1px solid rgba(245,168,0,0.35)' }}>
                 <Typography sx={{ fontSize: '0.52rem', fontWeight: 700, color: '#F5A800', letterSpacing: '1.5px', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace" }}>
                   {{ admin: 'Admin', staff: 'Staff', vp: 'VP' }[user.role]}
                 </Typography>

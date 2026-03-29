@@ -28,6 +28,7 @@ import { updateDocumentStatus } from '../services/documents'
 interface Props {
   document: RETDocument | null; open: boolean
   onClose: () => void; onUpdate: () => void; user: AppUser
+  viewOnly?: boolean
 }
 
 const STATUS_PROGRESS: Record<string, number> = {
@@ -47,7 +48,7 @@ const InfoRow: React.FC<{ label: string; value: React.ReactNode }> = ({ label, v
   </Box>
 )
 
-export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onClose, onUpdate, user }) => {
+export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onClose, onUpdate, user, viewOnly = false }) => {
   const [tab, setTab] = useState(0)
   const [feedback, setFeedback] = useState('')
   const [loading, setLoading] = useState(false)
@@ -56,7 +57,8 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
   if (!doc) return null
 
   const isVP  = user.role === 'vp'
-  const canAct = isVP && doc.status !== 'Approved' && doc.status !== 'Rejected'
+  const isDecided = doc.status === 'Approved' || doc.status === 'Rejected'
+  const canAct = isVP && !isDecided && !viewOnly
   const progress = STATUS_PROGRESS[doc.status] || 20
 
   const handleAction = async (status: string) => {
@@ -85,7 +87,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e', maxHeight: '90vh' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid #243040' }}>
         <Box sx={{ flex: 1, pr: 2 }}>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '1rem', lineHeight: 1.3, mb: 0.5 }}>{doc.title}</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
@@ -113,23 +115,23 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
 
       {/* Tabs */}
       <Box sx={{ px: 3, pt: 1.5 }}>
-        <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(245,168,0,0.2)', minHeight: 36 }}>
+        <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid #243040', minHeight: 36 }}>
           <Tab label="Details" sx={{ minHeight: 36, fontSize: '0.67rem' }} />
           <Tab label="Tracking History" sx={{ minHeight: 36, fontSize: '0.67rem' }} />
           {canAct && <Tab label="VP Action" sx={{ minHeight: 36, fontSize: '0.67rem', color: '#c9952a !important' }} />}
         </Tabs>
       </Box>
 
-      {/* Lock banner: show when VP views a finalized document */}
-      {isVP && (doc.status === 'Approved' || doc.status === 'Rejected') && (
-        <Box sx={{ mx: 3, mt: 2, p: '10px 16px', bgcolor: doc.status === 'Approved' ? 'rgba(46,125,50,0.12)' : 'rgba(183,28,28,0.12)', border: `1px solid ${doc.status === 'Approved' ? 'rgba(102,187,106,0.3)' : 'rgba(239,83,80,0.3)'}`, borderRadius: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+      {/* Lock banner: show only in explicit viewOnly mode */}
+      {isVP && viewOnly && (
+        <Box sx={{ mx: 3, mt: 2, p: '10px 16px', bgcolor: doc.status === 'Approved' ? '#0e2010' : '#200e0e', border: `1px solid ${doc.status === 'Approved' ? 'rgba(102,187,106,0.3)' : 'rgba(239,83,80,0.3)'}`, borderRadius: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Box sx={{ fontSize: '1rem' }}>{doc.status === 'Approved' ? '🔒' : '🚫'}</Box>
           <Box>
-            <Typography sx={{ fontSize: '0.72rem', fontWeight: 700, color: doc.status === 'Approved' ? '#66bb6a' : '#ef5350' }}>
-              Document {doc.status} — No Further Changes Allowed
+            <Typography sx={{ fontSize: '0.72rem', fontWeight: 700, color: doc.status === 'Approved' ? '#66bb6a' : doc.status === 'Rejected' ? '#ef5350' : '#4fc3f7' }}>
+              Document {doc.status} — View Only
             </Typography>
             <Typography sx={{ fontSize: '0.65rem', color: '#8fa3b8', mt: 0.2 }}>
-              This document has been finalized. Its status cannot be modified.
+              {isDecided ? 'This document has been finalized. Its status cannot be modified.' : 'You are viewing this document in read-only mode.'}
             </Typography>
           </Box>
         </Box>
@@ -162,7 +164,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
             )}
             {/* Email status */}
             <Grid item xs={12}>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', pt: 1, borderTop: '1px solid rgba(245,168,0,0.1)' }}>
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', pt: 1, borderTop: '1px solid #1a2535' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                   <EmailIcon sx={{ fontSize: 13, color: doc.emailSentToVP ? '#66bb6a' : '#8fa3b8' }} />
                   <Typography sx={{ fontSize: '0.65rem', color: doc.emailSentToVP ? '#66bb6a' : '#8fa3b8', fontFamily: "'IBM Plex Mono',monospace" }}>
@@ -192,7 +194,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
                   const dotColor = h.action === 'Approved' ? '#66bb6a' : h.action === 'Rejected' ? '#ef5350' : h.action === 'Submitted' ? '#c9952a' : '#4fc3f7'
                   return (
                     <Box key={i} sx={{ display: 'flex', gap: 2, position: 'relative' }}>
-                      {!isLast && <Box sx={{ position: 'absolute', left: 13, top: 28, width: 1, bottom: 0, bgcolor: 'rgba(245,168,0,0.2)', zIndex: 0 }} />}
+                      {!isLast && <Box sx={{ position: 'absolute', left: 13, top: 28, width: 1, bottom: 0, bgcolor: '#243040', zIndex: 0 }} />}
                       <Box sx={{ width: 27, height: 27, borderRadius: '50%', bgcolor: `${dotColor}18`, border: `1px solid ${dotColor}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, mt: 0.3, zIndex: 1 }}>
                         <Typography sx={{ fontSize: '0.62rem', fontWeight: 700, color: dotColor }}>{i + 1}</Typography>
                       </Box>
@@ -214,7 +216,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
         {/* VP ACTION */}
         {tab === 2 && canAct && (
           <Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, p: 1.5, bgcolor: 'rgba(245,168,0,0.06)', borderRadius: 1, border: '1px solid rgba(245,168,0,0.15)' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, p: 1.5, bgcolor: '#162030', borderRadius: 1, border: '1px solid #1e2a38' }}>
               <EmailIcon sx={{ fontSize: 14, color: '#c9952a' }} />
               <Typography sx={{ fontSize: '0.7rem', color: '#8fa3b8' }}>
                 Staff will be notified via <strong style={{ color: '#c9952a' }}>Brevo email</strong> upon Approve, Reject, or Request for Revision.
@@ -241,7 +243,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
             <Grid container spacing={1.5}>
               <Grid item xs={12} sm={6}>
                 <Button fullWidth variant="outlined" startIcon={<VisibilityIcon />} onClick={() => handleAction('Under Review')} disabled={loading}
-                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(123,31,162,0.4)', color: '#ce93d8', '&:hover': { bgcolor: 'rgba(123,31,162,0.08)', borderColor: '#ce93d8' } }}>
+                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(123,31,162,0.4)', color: '#ce93d8', '&:hover': { bgcolor: '#1a1228', borderColor: '#ce93d8' } }}>
                   Mark Under Review
                 </Button>
               </Grid>
@@ -253,13 +255,13 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button fullWidth variant="outlined" startIcon={<EditNoteIcon />} onClick={() => handleAction('Request For Revision')} disabled={loading}
-                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(2,119,189,0.4)', color: '#4fc3f7', '&:hover': { bgcolor: 'rgba(2,119,189,0.08)', borderColor: '#4fc3f7' } }}>
+                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(2,119,189,0.4)', color: '#4fc3f7', '&:hover': { bgcolor: '#0c1e2e', borderColor: '#4fc3f7' } }}>
                   Request Revision
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button fullWidth variant="outlined" startIcon={<CancelIcon />} onClick={() => handleAction('Rejected')} disabled={loading}
-                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(183,28,28,0.4)', color: '#ef5350', '&:hover': { bgcolor: 'rgba(183,28,28,0.08)', borderColor: '#ef5350' } }}>
+                  sx={{ fontSize: '0.72rem', borderColor: 'rgba(183,28,28,0.4)', color: '#ef5350', '&:hover': { bgcolor: '#1c0c0c', borderColor: '#ef5350' } }}>
                   Reject
                 </Button>
               </Grid>
@@ -269,7 +271,7 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
         )}
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 2.5, pt: 1.5, borderTop: '1px solid rgba(245,168,0,0.2)' }}>
+      <DialogActions sx={{ px: 3, pb: 2.5, pt: 1.5, borderTop: '1px solid #243040' }}>
         <Button onClick={onClose} variant="outlined" sx={{ fontSize: '0.72rem' }}>Close</Button>
       </DialogActions>
     </Dialog>

@@ -144,3 +144,26 @@ export async function deleteStaffAccount(uid: string): Promise<void> {
   // Here we just deactivate in Firestore.
   await updateDoc(doc(db, 'users', uid), { isActive: false })
 }
+
+// ── Document edit by staff ────────────────────────────────────
+export async function editDocument(params: {
+  docId: string; retId: string; docTitle: string
+  title: string; type: string; department: string; remarks: string
+  fileUrl: string | null; fileName: string | null
+  staffName: string; staffEmail: string
+  currentHistory: any[]
+}): Promise<void> {
+  const { docId, retId, docTitle, title, type, department, remarks, fileUrl, fileName, staffName, staffEmail, currentHistory } = params
+  const entry = { action: 'Edited', by: staffName, byEmail: staffEmail, at: new Date().toISOString(), note: 'Document details updated by staff.' }
+
+  await updateDoc(doc(db, 'documents', docId), {
+    title, type, department, remarks,
+    ...(fileUrl !== undefined && fileUrl !== null ? { fileUrl, fileName } : {}),
+    history: [...currentHistory, entry],
+    updatedAt: serverTimestamp(),
+    status: 'Pending',
+    feedback: '',
+  })
+
+  await addLog({ action: 'Document Edited', docId: retId, docTitle: title, by: staffName, byEmail: staffEmail, role: 'Staff' })
+}

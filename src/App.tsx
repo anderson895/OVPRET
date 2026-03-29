@@ -14,6 +14,7 @@ import { AdminStaffPage } from './pages/AdminStaffPage'
 import { SubmitPage } from './pages/SubmitPage'
 import { MyDocumentsPage } from './pages/MyDocumentsPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { VPDecisionsPage } from './pages/VPDecisionsPage'
 import { Layout, type PageId, PAGE_TITLES } from './components/Layout'
 import type { RETDocument, TransactionLog } from './types'
 import { listenDocuments, listenLogs } from './services/documents'
@@ -63,6 +64,9 @@ const App: React.FC = () => {
 
       case 'review':
         return <ReviewPage documents={documents} user={user} />
+
+      case 'vp-decisions':
+        return <VPDecisionsPage documents={documents} user={user} />
 
       case 'analytics':
         return <AnalyticsPage documents={documents} />

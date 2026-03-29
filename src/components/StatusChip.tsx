@@ -7,8 +7,8 @@ interface Props { status: DocStatus | string; size?: 'small' | 'medium' }
 const CFG: Record<string, { color: string; bg: string; border: string }> = {
   'Pending':              { color: '#ffa726', bg: 'rgba(230,81,0,0.12)',    border: 'rgba(230,81,0,0.3)'    },
   'Under Review':         { color: '#ce93d8', bg: 'rgba(123,31,162,0.12)', border: 'rgba(123,31,162,0.3)'  },
-  'Approved':             { color: '#66bb6a', bg: 'rgba(46,125,50,0.12)',  border: 'rgba(46,125,50,0.3)'   },
-  'Rejected':             { color: '#ef5350', bg: 'rgba(183,28,28,0.12)',  border: 'rgba(183,28,28,0.3)'   },
+  'Approved':             { color: '#66bb6a', bg: '#0e2010',  border: 'rgba(46,125,50,0.3)'   },
+  'Rejected':             { color: '#ef5350', bg: '#200e0e',  border: 'rgba(183,28,28,0.3)'   },
   'Request For Revision': { color: '#4fc3f7', bg: 'rgba(2,119,189,0.12)',  border: 'rgba(2,119,189,0.3)'   },
 }
 

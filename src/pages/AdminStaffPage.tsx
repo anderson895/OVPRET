@@ -72,7 +72,7 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(245,168,0,0.2)', pb: 1.5 }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #243040', pb: 1.5 }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>Create Staff Account</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>New account will be active immediately</Typography>
@@ -102,7 +102,7 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
               InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
               sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
-              SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid #2a3545', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: '#1a2535' }, '&.Mui-selected': { bgcolor: '#1e2a38', color: '#F5A800', '&:hover': { bgcolor: '#243040' } } } } } } }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>
@@ -123,7 +123,7 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(245,168,0,0.2)', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid #243040', gap: 1 }}>
         <Button onClick={handleClose} disabled={loading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
         <Button onClick={handleCreate} disabled={loading} variant="contained" startIcon={<PersonAddIcon />} sx={{ fontSize: '0.72rem', minWidth: 160 }}>
           {loading ? 'Creating...' : 'Create Account'}
@@ -204,7 +204,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
       </Grid>
 
       <Paper sx={{ bgcolor: '#0f1e2e' }}>
-        <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+        <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
           <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>Staff Accounts</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>Manage who can log in and submit documents</Typography>
         </Box>
@@ -235,7 +235,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                   <TableRow key={s.uid} sx={{ opacity: toggling === s.uid ? 0.5 : 1 }}>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
-                        <Box sx={{ width: 30, height: 30, borderRadius: '6px', bgcolor: 'rgba(245,168,0,0.15)', border: '1px solid rgba(245,168,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Box sx={{ width: 30, height: 30, borderRadius: '6px', bgcolor: '#1e2a38', border: '1px solid rgba(245,168,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#c9952a' }}>{s.displayName?.[0]?.toUpperCase()}</Typography>
                         </Box>
                         <Typography sx={{ fontSize: '0.82rem', fontWeight: 500, color: '#f0e8d0' }}>{s.displayName}</Typography>
@@ -249,7 +249,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                         size="small"
                         sx={{
                           fontSize: '0.6rem', height: 20, fontFamily: "'IBM Plex Mono',monospace", fontWeight: 700,
-                          bgcolor: s.isActive ? 'rgba(46,125,50,0.15)' : 'rgba(183,28,28,0.15)',
+                          bgcolor: s.isActive ? '#0e2010' : '#200e0e',
                           color: s.isActive ? '#66bb6a' : '#ef5350',
                           border: `1px solid ${s.isActive ? 'rgba(46,125,50,0.3)' : 'rgba(183,28,28,0.3)'}`,
                           '& .MuiChip-label': { px: 1 },
@@ -262,12 +262,12 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                       <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center' }}>
                         <Tooltip title={s.isActive ? 'Deactivate account' : 'Activate account'}>
                           <IconButton size="small" onClick={() => handleToggle(s)} disabled={toggling === s.uid}
-                            sx={{ color: s.isActive ? '#ffa726' : '#66bb6a', '&:hover': { bgcolor: s.isActive ? 'rgba(255,167,38,0.1)' : 'rgba(102,187,106,0.1)' } }}>
+                            sx={{ color: s.isActive ? '#ffa726' : '#66bb6a', '&:hover': { bgcolor: s.isActive ? '#1e2a1a' : '#0f2010' } }}>
                             {s.isActive ? <BlockIcon fontSize="small" /> : <CheckCircleIcon fontSize="small" />}
                           </IconButton>
                         </Tooltip>
                         <Tooltip title="Remove account">
-                          <IconButton size="small" onClick={() => handleDelete(s)} disabled={toggling === s.uid} sx={{ color: '#ef5350', '&:hover': { bgcolor: 'rgba(239,83,80,0.1)' } }}>
+                          <IconButton size="small" onClick={() => handleDelete(s)} disabled={toggling === s.uid} sx={{ color: '#ef5350', '&:hover': { bgcolor: '#200f0f' } }}>
                             <DeleteIcon fontSize="small" />
                           </IconButton>
                         </Tooltip>

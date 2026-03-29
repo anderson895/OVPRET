@@ -56,11 +56,11 @@ const MENU_PROPS = {
   PaperProps: {
     sx: {
       bgcolor: '#0f1e2e',
-      border: '1px solid rgba(245,168,0,0.25)',
+      border: '1px solid #2a3545',
       '& .MuiMenuItem-root': {
         fontSize: '0.85rem', color: '#f0e8d0',
-        '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' },
-        '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } }
+        '&:hover': { bgcolor: '#1a2535' },
+        '&.Mui-selected': { bgcolor: '#1e2a38', color: '#F5A800', '&:hover': { bgcolor: '#243040' } }
       }
     }
   }
@@ -125,7 +125,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid #243040' }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#000000', fontSize: '1rem' }}>Submit RET Document</Typography>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 1.2, letterSpacing: '1px' }}>
@@ -198,7 +198,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
           <Grid item xs={12}>
             <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
             {file ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(245,168,0,0.3)', borderRadius: 1.5, bgcolor: 'rgba(245,168,0,0.05)' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(245,168,0,0.3)', borderRadius: 1.5, bgcolor: '#141f2a' }}>
                 <InsertDriveFileIcon sx={{ color: '#c9952a', fontSize: 28 }} />
                 <Box sx={{ flex: 1 }}>
                   <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#fff' }}>{file.name}</Typography>
@@ -212,7 +212,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
                 onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={handleDrop}
-                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(245,168,0,0.25)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? 'rgba(245,168,0,0.05)' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}
+                sx={{ border: `2px dashed ${dragging ? '#c9952a' : '#2a3545'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? '#141f2a' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}
               >
                 <CloudUploadIcon sx={{ fontSize: 34, color: '#8fa3b8', mb: 1 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#8fa3b8' }}>
@@ -226,7 +226,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
         </Grid>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(245,168,0,0.2)', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid #243040', gap: 1 }}>
         <Button onClick={handleClose} disabled={uploading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
         <Button onClick={handleSubmit} disabled={uploading} variant="contained" sx={{ fontSize: '0.72rem', minWidth: 180 }}>
           {uploading ? 'Submitting...' : 'Submit for VP Approval'}
