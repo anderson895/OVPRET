@@ -9,6 +9,8 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Divider from '@mui/material/Divider'
 import { useAuth } from '../hooks/useAuth'
 
+const TAGLINE = 'A reliable platform that connects offices and personnel to streamline document tracking — featuring secure logging, status monitoring, and real-time updates for efficient and transparent document management.'
+
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -72,6 +74,14 @@ export const LoginPage: React.FC = () => {
         <Typography sx={{ color: 'rgba(245,168,0,0.7)', fontSize: '0.58rem', letterSpacing: '2.5px', textTransform: 'uppercase', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600, position: 'relative', zIndex: 1, textAlign: 'center' }}>
           Web-Based Document Tracking System
         </Typography>
+
+        {/* Tagline */}
+        <Box sx={{ width: 40, height: 2, bgcolor: 'rgba(245,168,0,0.3)', borderRadius: 1, my: 2.5, position: 'relative', zIndex: 1 }} />
+        <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.68rem', lineHeight: 1.7, textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          {TAGLINE}
+        </Typography>
+
+        
       </Box>
 
       {/* Right panel — login form */}

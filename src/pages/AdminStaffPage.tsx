@@ -169,7 +169,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>Admin Panel</Typography>
-          <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Staff Account Management</Typography>
+          <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#000000' }}>Staff Account Management</Typography>
           <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Create and manage staff accounts. Only you (Admin) can access this panel.</Typography>
         </Box>
         <Button variant="contained" startIcon={<PersonAddIcon />} onClick={() => setShowCreate(true)} sx={{ fontSize: '0.72rem' }}>

@@ -8,6 +8,7 @@ import {
   getAuth, signInWithEmailAndPassword,
   createUserWithEmailAndPassword, signOut,
   onAuthStateChanged, updateProfile,
+  updatePassword, EmailAuthProvider, reauthenticateWithCredential,
 } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -58,4 +59,5 @@ export {
   query, orderBy, serverTimestamp, getDoc, where, setDoc, deleteDoc,
   signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, updateProfile,
+  updatePassword, EmailAuthProvider, reauthenticateWithCredential,
 }

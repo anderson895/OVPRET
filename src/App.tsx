@@ -5,10 +5,15 @@ import { theme } from './theme'
 import { useAuth } from './hooks/useAuth'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { StaffDashboardPage } from './pages/StaffDashboardPage'
+import { VPDashboardPage } from './pages/VPDashboardPage'
 import { ReviewPage } from './pages/ReviewPage'
 import { AnalyticsPage } from './pages/AnalyticsPage'
 import { LogsPage } from './pages/LogsPage'
 import { AdminStaffPage } from './pages/AdminStaffPage'
+import { SubmitPage } from './pages/SubmitPage'
+import { MyDocumentsPage } from './pages/MyDocumentsPage'
+import { ProfilePage } from './pages/ProfilePage'
 import { Layout, type PageId, PAGE_TITLES } from './components/Layout'
 import type { RETDocument, TransactionLog } from './types'
 import { listenDocuments, listenLogs } from './services/documents'
@@ -28,7 +33,6 @@ const App: React.FC = () => {
     return () => { unsubDocs(); unsubLogs() }
   }, [user])
 
-  // Reset page on login/logout
   useEffect(() => {
     if (!user) setPage('dashboard')
   }, [user])
@@ -46,12 +50,34 @@ const App: React.FC = () => {
 
   const renderPage = () => {
     switch (page) {
-      case 'dashboard': return <DashboardPage documents={documents} user={user} />
-      case 'review':    return <ReviewPage    documents={documents} user={user} />
-      case 'analytics': return <AnalyticsPage documents={documents} />
-      case 'logs':      return <LogsPage      documents={documents} logs={logs} />
-      case 'staff':     return <AdminStaffPage user={user} />
-      default:          return <DashboardPage documents={documents} user={user} />
+      case 'dashboard':
+        if (user.role === 'staff') return <StaffDashboardPage documents={documents} user={user} onNavigate={setPage} />
+        if (user.role === 'vp')    return <VPDashboardPage    documents={documents} user={user} onNavigate={setPage} />
+        return <DashboardPage documents={documents} user={user} />
+
+      case 'submit':
+        return <SubmitPage documents={documents} user={user} />
+
+      case 'my-documents':
+        return <MyDocumentsPage documents={documents} user={user} />
+
+      case 'review':
+        return <ReviewPage documents={documents} user={user} />
+
+      case 'analytics':
+        return <AnalyticsPage documents={documents} />
+
+      case 'logs':
+        return <LogsPage documents={documents} logs={logs} />
+
+      case 'staff':
+        return <AdminStaffPage user={user} />
+
+      case 'profile':
+        return <ProfilePage user={user} />
+
+      default:
+        return <DashboardPage documents={documents} user={user} />
     }
   }
 

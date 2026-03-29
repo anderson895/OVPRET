@@ -120,6 +120,21 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
         </Tabs>
       </Box>
 
+      {/* Lock banner: show when VP views a finalized document */}
+      {isVP && (doc.status === 'Approved' || doc.status === 'Rejected') && (
+        <Box sx={{ mx: 3, mt: 2, p: '10px 16px', bgcolor: doc.status === 'Approved' ? 'rgba(46,125,50,0.12)' : 'rgba(183,28,28,0.12)', border: `1px solid ${doc.status === 'Approved' ? 'rgba(102,187,106,0.3)' : 'rgba(239,83,80,0.3)'}`, borderRadius: 1.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Box sx={{ fontSize: '1rem' }}>{doc.status === 'Approved' ? '🔒' : '🚫'}</Box>
+          <Box>
+            <Typography sx={{ fontSize: '0.72rem', fontWeight: 700, color: doc.status === 'Approved' ? '#66bb6a' : '#ef5350' }}>
+              Document {doc.status} — No Further Changes Allowed
+            </Typography>
+            <Typography sx={{ fontSize: '0.65rem', color: '#8fa3b8', mt: 0.2 }}>
+              This document has been finalized. Its status cannot be modified.
+            </Typography>
+          </Box>
+        </Box>
+      )}
+
       <DialogContent sx={{ pt: 2.5 }}>
         {/* DETAILS */}
         {tab === 0 && (

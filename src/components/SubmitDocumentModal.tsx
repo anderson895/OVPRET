@@ -127,7 +127,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
       <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
         <Box>
-          <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>Submit RET Document</Typography>
+          <Typography sx={{ fontWeight: 700, color: '#000000', fontSize: '1rem' }}>Submit RET Document</Typography>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 1.2, letterSpacing: '1px' }}>
             Process 1.0 — VP will be notified via email upon submission
           </Typography>

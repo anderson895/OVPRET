@@ -20,9 +20,11 @@ import HistoryIcon from '@mui/icons-material/History'
 import PeopleIcon from '@mui/icons-material/People'
 import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
+import FolderOpenIcon from '@mui/icons-material/FolderOpen'
+import SettingsIcon from '@mui/icons-material/Settings'
 import type { AppUser } from '../types'
 
-export type PageId = 'dashboard' | 'submit' | 'review' | 'analytics' | 'logs' | 'staff'
+export type PageId = 'dashboard' | 'submit' | 'review' | 'analytics' | 'logs' | 'staff' | 'my-documents' | 'profile'
 
 const DRAWER_WIDTH = 268
 
@@ -39,12 +41,14 @@ interface Props {
 }
 
 export const PAGE_TITLES: Record<PageId, string> = {
-  dashboard: 'Document Tracking Dashboard',
-  submit:    'Submit RET Document',
-  review:    'Review & Process Documents',
-  analytics: 'Document Analytics',
-  logs:      'Transaction Logs & History',
-  staff:     'Staff Account Management',
+  dashboard:    'Dashboard',
+  submit:       'Submit RET Document',
+  review:       'Review & Process Documents',
+  analytics:    'Document Analytics',
+  logs:         'Transaction Logs & History',
+  staff:        'Staff Account Management',
+  'my-documents': 'My Documents',
+  profile:      'Profile & Settings',
 }
 
 export const Layout: React.FC<Props> = ({
@@ -53,29 +57,25 @@ export const Layout: React.FC<Props> = ({
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const navItems: NavItem[] = [
-    { id: 'dashboard', label: 'Dashboard',        icon: <DashboardIcon  fontSize="small" />, roles: ['admin','staff','vp'] },
-    { id: 'submit',    label: 'Submit Document',   icon: <UploadFileIcon fontSize="small" />, roles: ['staff'] },
-    { id: 'review',    label: 'Review Documents',  icon: <RateReviewIcon fontSize="small" />, roles: ['vp'],   badge: pendingCount },
-    { id: 'analytics', label: 'Analytics',         icon: <BarChartIcon   fontSize="small" />, roles: ['admin','staff','vp'] },
-    { id: 'logs',      label: 'Logs & History',    icon: <HistoryIcon    fontSize="small" />, roles: ['admin','vp'] },
-    { id: 'staff',     label: 'Manage Staff',      icon: <PeopleIcon     fontSize="small" />, roles: ['admin'] },
+    { id: 'dashboard',     label: 'Dashboard',         icon: <DashboardIcon  fontSize="small" />, roles: ['admin','staff','vp'] },
+    { id: 'submit',        label: 'Submit Document',    icon: <UploadFileIcon fontSize="small" />, roles: ['staff'] },
+    { id: 'my-documents',  label: 'My Documents',       icon: <FolderOpenIcon fontSize="small" />, roles: ['staff'] },
+    { id: 'review',        label: 'Review Documents',   icon: <RateReviewIcon fontSize="small" />, roles: ['vp'], badge: pendingCount },
+    { id: 'analytics',     label: 'Analytics',          icon: <BarChartIcon   fontSize="small" />, roles: ['admin'] },
+    { id: 'logs',          label: 'Logs & History',     icon: <HistoryIcon    fontSize="small" />, roles: ['admin'] },
+    { id: 'staff',         label: 'Manage Staff',       icon: <PeopleIcon     fontSize="small" />, roles: ['admin'] },
+    { id: 'profile',       label: 'Profile & Settings', icon: <SettingsIcon   fontSize="small" />, roles: ['staff','vp'] },
   ]
 
   const roleLabel = { admin: 'Administrator', staff: 'Staff Member', vp: 'Vice President' }[user.role]
 
   const SidebarContent = () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: '#7B1C2E' }}>
-
-      {/* University branding header */}
-      <Box sx={{
-        p: '18px 16px 16px',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-      }}>
+      <Box sx={{ p: '18px 16px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Box sx={{
             width: 46, height: 46, flexShrink: 0,
-            borderRadius: '50%',
-            border: '2px solid rgba(245,168,0,0.5)',
+            borderRadius: '50%', border: '2px solid rgba(245,168,0,0.5)',
             overflow: 'hidden', bgcolor: '#fff',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
@@ -93,24 +93,19 @@ export const Layout: React.FC<Props> = ({
         </Box>
       </Box>
 
-      {/* Nav */}
       <Box sx={{ flex: 1, py: 1.5, overflowY: 'auto' }}>
         <Typography sx={{
           px: '16px', pt: 0.5, pb: 0.8,
           fontSize: '0.5rem', letterSpacing: '2.5px',
-          color: 'rgba(245,168,0,0.55)',
-          textTransform: 'uppercase', fontWeight: 700,
-          fontFamily: "'IBM Plex Mono', monospace",
-        }}>
-          Navigation
-        </Typography>
+          color: 'rgba(245,168,0,0.55)', textTransform: 'uppercase',
+          fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace",
+        }}>Navigation</Typography>
         <List disablePadding>
           {navItems.filter((n) => n.roles.includes(user.role)).map((item) => {
             const active = currentPage === item.id
             return (
               <ListItemButton
-                key={item.id}
-                selected={active}
+                key={item.id} selected={active}
                 onClick={() => { onNavigate(item.id); setMobileOpen(false) }}
                 sx={{
                   px: '16px', py: '8px', minHeight: 40,
@@ -138,14 +133,10 @@ export const Layout: React.FC<Props> = ({
         <Divider sx={{ my: 1.5, borderColor: 'rgba(255,255,255,0.1)' }} />
 
         <Typography sx={{
-          px: '16px', pb: 0.8,
-          fontSize: '0.5rem', letterSpacing: '2.5px',
-          color: 'rgba(245,168,0,0.55)',
-          textTransform: 'uppercase', fontWeight: 700,
-          fontFamily: "'IBM Plex Mono', monospace",
-        }}>
-          Account
-        </Typography>
+          px: '16px', pb: 0.8, fontSize: '0.5rem', letterSpacing: '2.5px',
+          color: 'rgba(245,168,0,0.55)', textTransform: 'uppercase',
+          fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace",
+        }}>Account</Typography>
         <List disablePadding>
           <ListItemButton
             onClick={onLogout}
@@ -157,16 +148,12 @@ export const Layout: React.FC<Props> = ({
         </List>
       </Box>
 
-      {/* User card */}
       <Box sx={{
-        p: '12px 16px',
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-        bgcolor: 'rgba(0,0,0,0.15)',
-        display: 'flex', alignItems: 'center', gap: 1.5,
+        p: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.1)',
+        bgcolor: 'rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: 1.5,
       }}>
         <Avatar sx={{
-          width: 34, height: 34,
-          bgcolor: '#F5A800',
+          width: 34, height: 34, bgcolor: '#F5A800',
           color: '#1a0800', fontSize: '0.85rem', fontWeight: 800, borderRadius: '7px',
         }}>
           {user.displayName?.[0]?.toUpperCase() || 'U'}
@@ -193,7 +180,6 @@ export const Layout: React.FC<Props> = ({
       </Drawer>
 
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-        {/* AppBar */}
         <AppBar position="sticky" elevation={0}>
           <Toolbar sx={{ minHeight: '56px !important', px: { xs: 2, md: 4 }, justifyContent: 'space-between' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>

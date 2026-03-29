@@ -57,7 +57,7 @@ export const SubmitPage: React.FC<Props> = ({ documents, user }) => {
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.5 }}>
             Process 1.0
           </Typography>
-          <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>Submit RET Document</Typography>
+          <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: '#000000' }}>Submit RET Document</Typography>
           <Typography sx={{ fontSize: '0.78rem', color: '#8fa3b8', mt: 0.3 }}>
             Submit documents for OVPRET Vice President approval.
           </Typography>
