@@ -15,6 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
 import Alert from '@mui/material/Alert'
 import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
@@ -93,11 +94,13 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
             <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
-            <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& option': { backgroundColor: '#1a2e45', color: '#f0e6c8' } }}
-              SelectProps={{ native: true }}>
-              <option value="">Select department...</option>
-              {DEPARTMENTS.map((d) => <option key={d} value={d}>{d}</option>)}
+            <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading}
+              InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' } }}
+              SelectProps={{ MenuProps: { PaperProps: { sx: { bgcolor: '#1a2e45', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e6c8', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+              <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
+              {DEPARTMENTS.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>

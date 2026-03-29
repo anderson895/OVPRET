@@ -164,5 +164,10 @@ export const theme = createTheme({
     MuiDialogTitle: {
       styleOverrides: { root: { fontWeight: 700, fontSize: '1rem', color: '#1C0A0E' } },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: { fontSize: '0.85rem' },
+      },
+    },
   },
 })

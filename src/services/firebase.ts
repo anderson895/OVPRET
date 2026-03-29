@@ -1,4 +1,4 @@
-import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
+import { initializeApp, getApps, deleteApp, type FirebaseApp } from 'firebase/app'
 import {
   getFirestore, collection, addDoc, getDocs, doc,
   updateDoc, onSnapshot, query, orderBy, serverTimestamp,
@@ -31,6 +31,25 @@ export function initFirebase() {
   }
   db   = getFirestore(app)
   auth = getAuth(app)
+}
+
+/**
+ * Creates a Firebase Auth user using a temporary secondary app instance.
+ * The primary app's auth state (admin session) is never touched.
+ * Returns the new user's UID.
+ */
+export async function createAuthUserSafely(email: string, password: string): Promise<string> {
+  const tmpName = `tmp-${Date.now()}`
+  const secondaryApp = initializeApp(firebaseConfig, tmpName)
+  const secondaryAuth = getAuth(secondaryApp)
+  try {
+    const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password)
+    return cred.user.uid
+  } finally {
+    // Always clean up — sign out then delete the temporary app
+    await signOut(secondaryAuth).catch(() => {})
+    await deleteApp(secondaryApp).catch(() => {})
+  }
 }
 
 export {

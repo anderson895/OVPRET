@@ -2,7 +2,7 @@ import type { RETDocument, TransactionLog, StaffAccount, DocStatus } from '../ty
 import {
   db, collection, addDoc, doc, updateDoc,
   onSnapshot, query, orderBy, serverTimestamp, setDoc,
-  createUserWithEmailAndPassword, auth,
+  createAuthUserSafely,
 } from './firebase'
 import { notifyVPNewDocument, notifyStaffDecision } from './brevo'
 
@@ -117,10 +117,10 @@ export async function createStaffAccount(data: {
   email: string; password: string; displayName: string
   department: string; adminEmail: string
 }): Promise<void> {
-  // Create Firebase Auth user
-  const cred = await createUserWithEmailAndPassword(auth, data.email, data.password)
-  // Save profile to Firestore
-  await setDoc(doc(db, 'users', cred.user.uid), {
+  // Create Auth user via secondary app — primary admin session is preserved
+  const uid = await createAuthUserSafely(data.email, data.password)
+  // Write Firestore profile as admin (primary auth still intact)
+  await setDoc(doc(db, 'users', uid), {
     email: data.email, displayName: data.displayName,
     department: data.department, role: 'staff',
     isActive: true, createdAt: serverTimestamp(), createdBy: data.adminEmail,

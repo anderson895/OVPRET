@@ -4,17 +4,16 @@ service cloud.firestore {
 
     // ── Helper functions ────────────────────────────────────
     function isAuthenticated() { return request.auth != null; }
-    function getUserRole() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role; }
+    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function getUserRole() { return userDoc().role; }
     function isAdmin() { return isAuthenticated() && getUserRole() == 'admin'; }
     function isVP()    { return isAuthenticated() && getUserRole() == 'vp'; }
     function isStaff() { return isAuthenticated() && getUserRole() == 'staff'; }
-    function isActive() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActive == true; }
+    function isActive() { return userDoc().isActive == true; }
 
     // ── Users collection (staff profiles) ──────────────────
     match /users/{userId} {
-      // Any authenticated user can read their own profile
       allow read:   if isAuthenticated() && (request.auth.uid == userId || isAdmin());
-      // Only admin can create/update staff profiles
       allow create: if isAdmin();
       allow update: if isAdmin() || request.auth.uid == userId;
       allow delete: if isAdmin();
@@ -22,28 +21,23 @@ service cloud.firestore {
 
     // ── Documents collection ────────────────────────────────
     match /documents/{docId} {
-      // Any active authenticated user can read documents
-      // Staff can only read their own documents
-      allow read: if isAuthenticated() && isActive() &&
-        (isAdmin() || isVP() || resource.data.submittedByUid == request.auth.uid);
+      // Admin can always read; VP and staff need isActive check
+      allow read: if isAdmin() ||
+        (isAuthenticated() && isActive() && isVP()) ||
+        (isAuthenticated() && isActive() && isStaff() && resource.data.submittedByUid == request.auth.uid);
 
-      // Active staff/admin can create new documents
       allow create: if isAuthenticated() && isActive() &&
         (isStaff() || isAdmin()) &&
         request.resource.data.submittedByUid == request.auth.uid;
 
-      // VP can update (approve/reject/revise); admin can update anything
       allow update: if isAuthenticated() && isActive() && (isVP() || isAdmin());
-
-      // Only admin can delete
       allow delete: if isAdmin();
     }
 
     // ── Transaction logs — append-only ──────────────────────
     match /logs/{logId} {
-      allow read:   if isAuthenticated() && isActive() && (isAdmin() || isVP());
+      allow read:   if isAdmin() || (isAuthenticated() && isActive() && isVP());
       allow create: if isAuthenticated() && isActive();
-      // Logs are immutable — no updates or deletes
       allow update, delete: if false;
     }
   }
