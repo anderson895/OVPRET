@@ -87,23 +87,24 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
-            <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }}
+            <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& option': { backgroundColor: '#1a2e45', color: '#f0e6c8' } }}
               SelectProps={{ native: true }}>
               <option value="">Select department...</option>
               {DEPARTMENTS.map((d) => <option key={d} value={d}>{d}</option>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
         </Grid>
       </DialogContent>

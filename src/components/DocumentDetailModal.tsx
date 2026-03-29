@@ -216,8 +216,8 @@ export const DocumentDetailModal: React.FC<Props> = ({ document: doc, open, onCl
               disabled={loading}
               placeholder="Enter your feedback. Required for Reject and Request Revision."
               sx={{ mb: 3 }}
-              InputLabelProps={{ sx: { fontSize: '0.8rem' } }}
-              inputProps={{ style: { fontSize: '0.82rem', color: '#1C0A0E' } }}
+              InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }}
+              inputProps={{ style: { fontSize: '0.82rem', color: '#f0e6c8' } }}
             />
 
             <Divider sx={{ mb: 2.5 }} />

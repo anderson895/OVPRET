@@ -120,20 +120,20 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
 
         <Grid container spacing={2.5}>
           <Grid item xs={12}>
-            <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} placeholder="e.g., Q1 Budget Request FY 2024" InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} placeholder="e.g., Q1 Budget Request FY 2024" InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }}>
+            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}>
               {DOC_TYPES.map((t) => <MenuItem key={t} value={t} sx={{ fontSize: '0.85rem' }}>{t}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Department / Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }}>
+            <TextField select label="Department / Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }}>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d} sx={{ fontSize: '0.85rem' }}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Remarks / Notes" fullWidth multiline minRows={3} value={form.remarks} onChange={field('remarks')} disabled={uploading} placeholder="Optional — any notes for the VP..." InputLabelProps={{ sx: { fontSize: '0.8rem' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#1C0A0E' } }} />
+            <TextField label="Remarks / Notes" fullWidth multiline minRows={3} value={form.remarks} onChange={field('remarks')} disabled={uploading} placeholder="Optional — any notes for the VP..." InputLabelProps={{ sx: { fontSize: '0.8rem', color: '#a8bfd4', '&.Mui-focused': { color: '#F5A800' } } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e6c8' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } } }} />
           </Grid>
           <Grid item xs={12}>
             <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
