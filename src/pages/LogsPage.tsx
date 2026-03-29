@@ -44,7 +44,7 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
     <Box>
       <Box sx={{ mb: 3 }}>
         <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>Document Database</Typography>
-        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Transaction Logs & History</Typography>
+        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#000000' }}>Transaction Logs & History</Typography>
         <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Immutable audit trail of all document actions including Brevo email notifications.</Typography>
       </Box>
 

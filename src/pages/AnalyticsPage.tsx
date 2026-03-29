@@ -72,7 +72,7 @@ export const AnalyticsPage: React.FC<Props> = ({ documents }) => {
     <Box>
       <Box sx={{ mb: 3 }}>
         <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>Process 5.0</Typography>
-        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Document Analytics</Typography>
+        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#000000' }}>Document Analytics</Typography>
         <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Real-time analytics generated from the Firestore document database.</Typography>
       </Box>
 
