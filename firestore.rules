@@ -2,38 +2,49 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Documents collection
-    match /documents/{docId} {
-      // Any authenticated user can read documents
-      allow read: if request.auth != null;
+    // ── Helper functions ────────────────────────────────────
+    function isAuthenticated() { return request.auth != null; }
+    function getUserRole() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role; }
+    function isAdmin() { return isAuthenticated() && getUserRole() == 'admin'; }
+    function isVP()    { return isAuthenticated() && getUserRole() == 'vp'; }
+    function isStaff() { return isAuthenticated() && getUserRole() == 'staff'; }
+    function isActive() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActive == true; }
 
-      // Any authenticated user can create a new document
-      allow create: if request.auth != null
-        && request.resource.data.submittedByEmail == request.auth.token.email;
-
-      // Only the submitter OR a VP can update a document
-      allow update: if request.auth != null
-        && (
-          resource.data.submittedByEmail == request.auth.token.email
-          || request.auth.token.role == 'vp'
-        );
-
-      // Only admins can delete
-      allow delete: if request.auth != null
-        && request.auth.token.role == 'admin';
-    }
-
-    // Transaction logs — append-only for authenticated users
-    match /logs/{logId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null;
-      allow update, delete: if false; // Immutable logs
-    }
-
-    // User profiles
+    // ── Users collection (staff profiles) ──────────────────
     match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      // Any authenticated user can read their own profile
+      allow read:   if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      // Only admin can create/update staff profiles
+      allow create: if isAdmin();
+      allow update: if isAdmin() || request.auth.uid == userId;
+      allow delete: if isAdmin();
+    }
+
+    // ── Documents collection ────────────────────────────────
+    match /documents/{docId} {
+      // Any active authenticated user can read documents
+      // Staff can only read their own documents
+      allow read: if isAuthenticated() && isActive() &&
+        (isAdmin() || isVP() || resource.data.submittedByUid == request.auth.uid);
+
+      // Active staff/admin can create new documents
+      allow create: if isAuthenticated() && isActive() &&
+        (isStaff() || isAdmin()) &&
+        request.resource.data.submittedByUid == request.auth.uid;
+
+      // VP can update (approve/reject/revise); admin can update anything
+      allow update: if isAuthenticated() && isActive() && (isVP() || isAdmin());
+
+      // Only admin can delete
+      allow delete: if isAdmin();
+    }
+
+    // ── Transaction logs — append-only ──────────────────────
+    match /logs/{logId} {
+      allow read:   if isAuthenticated() && isActive() && (isAdmin() || isVP());
+      allow create: if isAuthenticated() && isActive();
+      // Logs are immutable — no updates or deletes
+      allow update, delete: if false;
     }
   }
 }

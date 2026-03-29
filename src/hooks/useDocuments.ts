@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { RETDocument, TransactionLog } from '../types';
 import { listenDocuments, listenLogs } from '../services/documents';
-import { demoGetDocuments, demoGetLogs } from '../services/demo';
-
-const DEMO = import.meta.env.VITE_DEMO_MODE === 'true';
 
 export function useDocuments() {
   const [documents, setDocuments] = useState<RETDocument[]>([]);
@@ -11,10 +8,7 @@ export function useDocuments() {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(() => {
-    if (DEMO) {
-      setDocuments(demoGetDocuments());
-      setLogs(demoGetLogs());
-    }
+    // no-op for Firestore: real-time listeners keep data current automatically
   }, []);
 
   useEffect(() => {

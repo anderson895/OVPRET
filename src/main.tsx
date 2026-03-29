@@ -1,14 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { initFirebase } from './services/firebase'
 
-// Initialize Firebase (only in production mode)
-if (import.meta.env.VITE_DEMO_MODE !== 'true') {
-  import('./services/firebase').then(({ initFirebase }) => initFirebase());
-}
+initFirebase()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
-);
+)
