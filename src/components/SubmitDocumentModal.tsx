@@ -32,6 +32,40 @@ const DEPARTMENTS = [
   'Office of the Extension Director',
 ]
 
+const LABEL_PROPS = {
+  shrink: true,
+  style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' }
+}
+
+const FIELD_SX = {
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' },
+    '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' },
+    '&.Mui-focused fieldset': { borderColor: '#F5A800' },
+  },
+  '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' },
+}
+
+const TEXT_SX = {
+  ...FIELD_SX,
+  '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 },
+  '& .MuiInputBase-inputMultiline::placeholder': { color: '#6a8aaa', opacity: 1 },
+}
+
+const MENU_PROPS = {
+  PaperProps: {
+    sx: {
+      bgcolor: '#0f1e2e',
+      border: '1px solid rgba(245,168,0,0.25)',
+      '& .MuiMenuItem-root': {
+        fontSize: '0.85rem', color: '#f0e8d0',
+        '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' },
+        '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } }
+      }
+    }
+  }
+}
+
 export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess, user }) => {
   const [form, setForm] = useState({ title: '', type: '', department: user.department || '', remarks: '' })
   const [file, setFile] = useState<File | null>(null)
@@ -94,7 +128,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
       <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(245,168,0,0.2)' }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#fff', fontSize: '1rem' }}>Submit RET Document</Typography>
-          <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 0.3, letterSpacing: '1px' }}>
+          <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 1.2, letterSpacing: '1px' }}>
             Process 1.0 — VP will be notified via email upon submission
           </Typography>
         </Box>
@@ -103,7 +137,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
         </IconButton>
       </DialogTitle>
 
-      <DialogContent sx={{ pt: 3 }}>
+      <DialogContent sx={{ pt: 5, pb: 3, overflow: 'visible' }}>
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         {uploading && (
           <Box sx={{ mb: 2 }}>
@@ -114,28 +148,52 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
           </Box>
         )}
 
-        <Grid container spacing={2.5}>
+        <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
           <Grid item xs={12}>
-            <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} placeholder="e.g., Q1 Budget Request FY 2024" InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' } }} />
+            <TextField
+              label="Document Title *" fullWidth
+              value={form.title} onChange={field('title')} disabled={uploading}
+              placeholder="e.g., Q1 Budget Request FY 2024"
+              InputLabelProps={LABEL_PROPS}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={TEXT_SX}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.type ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' } }}
-              SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+            <TextField
+              select label="Document Type *" fullWidth
+              value={form.type} onChange={field('type')} disabled={uploading}
+              InputLabelProps={LABEL_PROPS}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ ...FIELD_SX, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.type ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
+              SelectProps={{ displayEmpty: true, MenuProps: MENU_PROPS }}
+            >
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select type...</MenuItem>
               {DOC_TYPES.map((t) => <MenuItem key={t} value={t} sx={{ fontSize: '0.85rem' }}>{t}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Department / Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.type ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' } }}
-              SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
+            <TextField
+              select label="Department / Office *" fullWidth
+              value={form.department} onChange={field('department')} disabled={uploading}
+              InputLabelProps={LABEL_PROPS}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={{ ...FIELD_SX, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
+              SelectProps={{ displayEmpty: true, MenuProps: MENU_PROPS }}
+            >
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d} sx={{ fontSize: '0.85rem' }}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Remarks / Notes" fullWidth multiline minRows={3} value={form.remarks} onChange={field('remarks')} disabled={uploading} placeholder="Optional — any notes for the VP..." InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }} inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' }, '& input::placeholder': { color: '#6a8aaa', opacity: 1 }, '& textarea::placeholder': { color: '#6a8aaa', opacity: 1 } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' } }} />
+            <TextField
+              label="Remarks / Notes" fullWidth multiline minRows={3}
+              value={form.remarks} onChange={field('remarks')} disabled={uploading}
+              placeholder="Optional — any notes for the VP..."
+              InputLabelProps={LABEL_PROPS}
+              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
+              sx={TEXT_SX}
+            />
           </Grid>
           <Grid item xs={12}>
             <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
@@ -149,8 +207,13 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
                 <IconButton onClick={() => setFile(null)} disabled={uploading} size="small" sx={{ color: '#ef5350' }}><DeleteIcon fontSize="small" /></IconButton>
               </Box>
             ) : (
-              <Box onClick={() => !uploading && fileRef.current?.click()} onDragOver={(e) => { e.preventDefault(); setDragging(true) }} onDragLeave={() => setDragging(false)} onDrop={handleDrop}
-                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(245,168,0,0.25)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? 'rgba(245,168,0,0.05)' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}>
+              <Box
+                onClick={() => !uploading && fileRef.current?.click()}
+                onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
+                onDragLeave={() => setDragging(false)}
+                onDrop={handleDrop}
+                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(245,168,0,0.25)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? 'rgba(245,168,0,0.05)' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}
+              >
                 <CloudUploadIcon sx={{ fontSize: 34, color: '#8fa3b8', mb: 1 }} />
                 <Typography sx={{ fontSize: '0.82rem', color: '#8fa3b8' }}>
                   Drag & drop or <Box component="span" sx={{ color: '#c9952a', fontWeight: 600 }}>click to browse</Box>
