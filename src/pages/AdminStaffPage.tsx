@@ -85,23 +85,23 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
         <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
           <Grid item xs={12}>
             <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               placeholder="e.g. Juan dela Cruz"
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12}>
             <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               placeholder="staff@ovpret.edu.ph"
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12}>
             <TextField select label="Department *" fullWidth value={form.department} onChange={field('department')} disabled={loading}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
               SelectProps={{ displayEmpty: true, MenuProps: { PaperProps: { sx: { bgcolor: '#0f1e2e', border: '1px solid rgba(245,168,0,0.25)', '& .MuiMenuItem-root': { fontSize: '0.85rem', color: '#f0e8d0', '&:hover': { bgcolor: 'rgba(245,168,0,0.1)' }, '&.Mui-selected': { bgcolor: 'rgba(245,168,0,0.15)', color: '#F5A800', '&:hover': { bgcolor: 'rgba(245,168,0,0.2)' } } } } } } }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
               {DEPARTMENTS.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
@@ -109,17 +109,17 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               placeholder="Min. 8 characters"
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading}
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{ shrink: true, style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' } }}
               placeholder="Re-enter password"
               inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root': { color: '#a8bfd4', fontSize: '0.8rem', bgcolor: '#0f1e2e', px: 0.5 }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
+              sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' }, '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' }, '&.Mui-focused fieldset': { borderColor: '#F5A800' } }, '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' }, '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 } }} />
           </Grid>
         </Grid>
       </DialogContent>
@@ -169,7 +169,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>Admin Panel</Typography>
-          <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#000000' }}>Staff Account Management</Typography>
+          <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Staff Account Management</Typography>
           <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Create and manage staff accounts. Only you (Admin) can access this panel.</Typography>
         </Box>
         <Button variant="contained" startIcon={<PersonAddIcon />} onClick={() => setShowCreate(true)} sx={{ fontSize: '0.72rem' }}>
