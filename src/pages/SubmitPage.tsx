@@ -21,7 +21,7 @@ import { DocumentDetailModal } from '../components/DocumentDetailModal';
 interface Props {
   documents: RETDocument[];
   user: AppUser;
-  onRefresh: () => void;
+  
 }
 
 const formatDateShort = (ts: any): string => {
@@ -30,7 +30,7 @@ const formatDateShort = (ts: any): string => {
   return d.toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' });
 };
 
-export const SubmitPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
+export const SubmitPage: React.FC<Props> = ({ documents, user }) => {
   const [showSubmit, setShowSubmit] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<RETDocument | null>(null);
   const [snack, setSnack] = useState<{ open: boolean; retId: string }>({ open: false, retId: '' });
@@ -46,7 +46,7 @@ export const SubmitPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
 
   const handleSubmitSuccess = (retId: string) => {
     setShowSubmit(false);
-    onRefresh();
+    
     setSnack({ open: true, retId });
   };
 
@@ -172,7 +172,7 @@ export const SubmitPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
       </Paper>
 
       <SubmitDocumentModal open={showSubmit} onClose={() => setShowSubmit(false)} onSuccess={handleSubmitSuccess} user={user} />
-      <DocumentDetailModal document={selectedDoc} open={!!selectedDoc} onClose={() => setSelectedDoc(null)} onUpdate={() => { setSelectedDoc(null); onRefresh(); }} user={user} />
+      <DocumentDetailModal document={selectedDoc} open={!!selectedDoc} onClose={() => setSelectedDoc(null)} onUpdate={() => { setSelectedDoc(null);  }} user={user} />
 
       <Snackbar open={snack.open} autoHideDuration={7000} onClose={() => setSnack({ open: false, retId: '' })} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
         <Alert severity="success" sx={{ fontSize: '0.78rem' }}>

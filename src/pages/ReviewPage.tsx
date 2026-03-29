@@ -14,7 +14,7 @@ import type { RETDocument, AppUser } from '../types'
 import { StatusChip } from '../components/StatusChip'
 import { DocumentDetailModal } from '../components/DocumentDetailModal'
 
-interface Props { documents: RETDocument[]; user: AppUser; onRefresh: () => void }
+interface Props { documents: RETDocument[]; user: AppUser }
 
 const STATUSES = ['All','Pending','Under Review','Approved','Rejected','Request For Revision']
 
@@ -40,7 +40,7 @@ const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void
   </Box>
 )
 
-export const ReviewPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
+export const ReviewPage: React.FC<Props> = ({ documents, user }) => {
   const [selected, setSelected] = useState<RETDocument | null>(null)
   const [filter, setFilter]     = useState('Pending')
 
@@ -124,7 +124,7 @@ export const ReviewPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
         )}
       </Paper>
 
-      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => { setSelected(null); onRefresh() }} user={user} />
+      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => setSelected(null)} user={user} />
     </Box>
   )
 }

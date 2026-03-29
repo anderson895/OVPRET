@@ -22,7 +22,7 @@ import { StatusChip } from '../components/StatusChip'
 import { SubmitDocumentModal } from '../components/SubmitDocumentModal'
 import { DocumentDetailModal } from '../components/DocumentDetailModal'
 
-interface Props { documents: RETDocument[]; user: AppUser; onRefresh: () => void }
+interface Props { documents: RETDocument[]; user: AppUser }
 
 const STATUSES = ['All','Pending','Under Review','Approved','Rejected','Request For Revision']
 
@@ -46,7 +46,7 @@ const FilterChip: React.FC<{ label: string; active: boolean; onClick: () => void
   </Box>
 )
 
-export const DashboardPage: React.FC<Props> = ({ documents, user, onRefresh }) => {
+export const DashboardPage: React.FC<Props> = ({ documents, user }) => {
   const [showSubmit, setShowSubmit] = useState(false)
   const [selected, setSelected]   = useState<RETDocument | null>(null)
   const [search, setSearch]       = useState('')
@@ -160,8 +160,8 @@ export const DashboardPage: React.FC<Props> = ({ documents, user, onRefresh }) =
         )}
       </Paper>
 
-      <SubmitDocumentModal open={showSubmit} onClose={() => setShowSubmit(false)} onSuccess={(id) => { setShowSubmit(false); onRefresh(); setSnack({ open: true, msg: `Document submitted! RET ID: ${id}. VP has been notified via email.` }) }} user={user} />
-      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => { setSelected(null); onRefresh() }} user={user} />
+      <SubmitDocumentModal open={showSubmit} onClose={() => setShowSubmit(false)} onSuccess={(id) => { setShowSubmit(false); setSnack({ open: true, msg: `Document submitted! RET ID: ${id}. VP has been notified via email.` }) }} user={user} />
+      <DocumentDetailModal document={selected} open={!!selected} onClose={() => setSelected(null)} onUpdate={() => setSelected(null)} user={user} />
       <Snackbar open={snack.open} autoHideDuration={7000} onClose={() => setSnack({ open: false, msg: '' })} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
         <Alert severity="success" sx={{ fontSize: '0.78rem' }}>{snack.msg}</Alert>
       </Snackbar>
