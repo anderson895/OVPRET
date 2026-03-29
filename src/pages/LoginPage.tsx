@@ -115,7 +115,7 @@ export const LoginPage: React.FC = () => {
             disabled={loading} placeholder="user@msu.edu.ph"
             sx={{ mb: 2 }}
             InputLabelProps={{ sx: { fontSize: '0.85rem' } }}
-            inputProps={{ style: { fontSize: '0.9rem' } }}
+            inputProps={{ style: { fontSize: '0.9rem', color: '#1C0A0E' } }}
           />
           <TextField
             label="Password" type="password" fullWidth
@@ -124,7 +124,7 @@ export const LoginPage: React.FC = () => {
             disabled={loading} placeholder="Enter your password"
             sx={{ mb: 3.5 }}
             InputLabelProps={{ sx: { fontSize: '0.85rem' } }}
-            inputProps={{ style: { fontSize: '0.9rem' } }}
+            inputProps={{ style: { fontSize: '0.9rem', color: '#1C0A0E' } }}
           />
 
           <Button

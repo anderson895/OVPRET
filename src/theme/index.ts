@@ -131,6 +131,15 @@ export const theme = createTheme({
           '& fieldset': { borderColor: 'rgba(123,28,46,0.25)' },
           '&:hover fieldset': { borderColor: 'rgba(123,28,46,0.5) !important' },
           '&.Mui-focused fieldset': { borderColor: '#7B1C2E !important' },
+          '& input::placeholder': { color: '#9E7080', opacity: 1 },
+          '& textarea::placeholder': { color: '#9E7080', opacity: 1 },
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&::placeholder': { color: '#9E7080', opacity: 1 },
         },
       },
     },
