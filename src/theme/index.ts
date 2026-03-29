@@ -236,5 +236,11 @@ export const theme = createTheme({
         root: { fontSize: '0.85rem', color: C.cream },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        select: { color: C.cream, fontSize: '0.85rem' },
+        icon:   { color: C.labelBlue },
+      },
+    },
   },
 })
