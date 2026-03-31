@@ -125,13 +125,13 @@ export const EditDocumentModal: React.FC<Props> = ({ document: doc, open, onClos
             <TextField label="Document Title *" fullWidth value={form.title} onChange={field('title')} disabled={uploading} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} SelectProps={{ displayEmpty: true }}>
+            <TextField select label="Document Type *" fullWidth value={form.type} onChange={field('type')} disabled={uploading} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
               <MenuItem value="">Select type...</MenuItem>
               {DOC_TYPES.map((t) => <MenuItem key={t} value={t}>{t}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} SelectProps={{ displayEmpty: true }}>
+            <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={uploading} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
               <MenuItem value="">Select office...</MenuItem>
               {OFFICES.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>

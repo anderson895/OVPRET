@@ -133,7 +133,7 @@ const RegisterForm: React.FC = () => {
 
       <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} placeholder="e.g. Juan dela Cruz" sx={{ mb: 2 }} InputLabelProps={{ sx: { fontSize: '0.85rem' } }} inputProps={{ style: { fontSize: '0.9rem', color: '#1C0A0E' } }} />
       <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" sx={{ mb: 2 }} InputLabelProps={{ sx: { fontSize: '0.85rem' } }} inputProps={{ style: { fontSize: '0.9rem', color: '#1C0A0E' } }} />
-      <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={loading} sx={{ mb: 2 }} InputLabelProps={{ sx: { fontSize: '0.85rem' } }} SelectProps={{ displayEmpty: true }}>
+      <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={loading} sx={{ mb: 2 }} InputLabelProps={{ shrink: true, sx: { fontSize: '0.85rem' } }} SelectProps={{ displayEmpty: true }}>
         <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select your office...</MenuItem>
         {OFFICES.map((o) => <MenuItem key={o} value={o} sx={{ fontSize: '0.85rem' }}>{o}</MenuItem>)}
       </TextField>

@@ -93,7 +93,7 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
           <Grid item xs={12}><TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} placeholder="e.g. Juan dela Cruz" /></Grid>
           <Grid item xs={12}><TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" /></Grid>
           <Grid item xs={12}>
-            <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={loading} SelectProps={{ displayEmpty: true }}>
+            <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={loading} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select office...</MenuItem>
               {OFFICES.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>

@@ -139,6 +139,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
             <TextField
               select label="Document Type *" fullWidth
               value={form.type} onChange={field('type')} disabled={uploading}
+              InputLabelProps={{ shrink: true }}
               SelectProps={{ displayEmpty: true }}
             >
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select type...</MenuItem>
@@ -149,6 +150,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
             <TextField
               select label="Office *" fullWidth
               value={form.department} onChange={field('department')} disabled={uploading}
+              InputLabelProps={{ shrink: true }}
               SelectProps={{ displayEmpty: true }}
             >
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select office...</MenuItem>
