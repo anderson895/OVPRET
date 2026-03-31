@@ -16,7 +16,7 @@ export const ProfilePage: React.FC<Props> = ({ user }) => {
     <Box>
       <Box sx={{ mb: 3 }}>
         <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.5 }}>OVPRET</Typography>
-        <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: '#1C0A0E' }}>Profile & Settings</Typography>
+        <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: '#1C0A0E' }}>Profile</Typography>
       </Box>
 
       <Grid container spacing={3}>

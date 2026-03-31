@@ -48,7 +48,7 @@ export const PAGE_TITLES: Record<PageId, string> = {
   logs:           'Transaction Logs & History',
   staff:          'Staff Account Management',
   'my-documents': 'My Documents',
-  profile:        'Profile & Settings',
+  profile:        'Profile',
   'vp-decisions': 'My Decisions',
 }
 
@@ -66,7 +66,7 @@ export const Layout: React.FC<Props> = ({
     { id: 'analytics',     label: 'Analytics',          icon: <BarChartIcon   fontSize="small" />, roles: ['admin'] },
     { id: 'logs',          label: 'Logs & History',     icon: <HistoryIcon    fontSize="small" />, roles: ['admin'] },
     { id: 'staff',         label: 'Manage Staff',       icon: <PeopleIcon     fontSize="small" />, roles: ['admin'] },
-    { id: 'profile',       label: 'Profile & Settings', icon: <SettingsIcon   fontSize="small" />, roles: ['staff','vp'] },
+    { id: 'profile',       label: 'Profile',            icon: <SettingsIcon   fontSize="small" />, roles: ['staff','vp'] },
   ]
 
   const roleLabel = { admin: 'Administrator', staff: 'Staff Member', vp: 'Vice President' }[user.role]
