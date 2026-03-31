@@ -19,52 +19,28 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import type { AppUser } from '../types'
 import { submitDocument } from '../services/documents'
 import { uploadFile, validateFile, formatFileSize, ALLOWED_TYPES } from '../services/cloudinary'
+import { logError } from '../services/errorLogger'
 
 interface Props {
   open: boolean; onClose: () => void
   onSuccess: (retId: string) => void; user: AppUser
 }
 
-const DOC_TYPES = ['Research','Extension','Technology','Financial','Proposal','Administrative','MOA','Other']
-const DEPARTMENTS = [
+const DOC_TYPES = [
+  'Accomplishment Report',
+  'Request for Incentives',
+  'Request for Training / Research Activities',
+  'Financial',
+  'Proposals',
+  'Memorandums',
+  'Endorsements',
+]
+
+const OFFICES = [
   'Office of the Research Director',
   'Office of the Knowledge Technology Transfer',
   'Office of the Extension Director',
 ]
-
-const LABEL_PROPS = {
-  shrink: true,
-  style: { fontSize: '0.8rem', color: '#a8bfd4', background: '#0f1e2e', padding: '0 4px' }
-}
-
-const FIELD_SX = {
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': { borderColor: 'rgba(245,168,0,0.3)' },
-    '&:hover fieldset': { borderColor: 'rgba(245,168,0,0.6)' },
-    '&.Mui-focused fieldset': { borderColor: '#F5A800' },
-  },
-  '& .MuiInputLabel-root.Mui-focused': { color: '#F5A800' },
-}
-
-const TEXT_SX = {
-  ...FIELD_SX,
-  '& .MuiInputBase-input::placeholder': { color: '#6a8aaa', opacity: 1 },
-  '& .MuiInputBase-inputMultiline::placeholder': { color: '#6a8aaa', opacity: 1 },
-}
-
-const MENU_PROPS = {
-  PaperProps: {
-    sx: {
-      bgcolor: '#0f1e2e',
-      border: '1px solid #2a3545',
-      '& .MuiMenuItem-root': {
-        fontSize: '0.85rem', color: '#f0e8d0',
-        '&:hover': { bgcolor: '#1a2535' },
-        '&.Mui-selected': { bgcolor: '#1e2a38', color: '#F5A800', '&:hover': { bgcolor: '#243040' } }
-      }
-    }
-  }
-}
 
 export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess, user }) => {
   const [form, setForm] = useState({ title: '', type: '', department: user.department || '', remarks: '' })
@@ -97,7 +73,7 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
   const handleSubmit = async () => {
     if (!form.title.trim()) { setError('Document title is required.'); return }
     if (!form.type)         { setError('Please select a document type.'); return }
-    if (!form.department.trim()) { setError('Department is required.'); return }
+    if (!form.department.trim()) { setError('Office is required.'); return }
     setError(''); setUploading(true); setProgress(10)
     try {
       let fileUrl: string | null = null
@@ -119,30 +95,32 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
       await new Promise((r) => setTimeout(r, 300))
       handleClose(); onSuccess(retId)
     } catch (e: any) {
-      setError(e.message || 'Submission failed.')
+      const msg = e.message || 'Submission failed.'
+      setError(msg)
+      logError({ message: msg, error: e, component: 'SubmitDocumentModal', action: 'submit', userId: user.uid, userEmail: user.email, userRole: user.role })
     } finally { setUploading(false) }
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth PaperProps={{ sx: { bgcolor: '#0f1e2e' } }}>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid #243040' }}>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pb: 1.5, borderBottom: '1px solid rgba(123,28,46,0.1)' }}>
         <Box>
-          <Typography sx={{ fontWeight: 700, color: '#000000', fontSize: '1rem' }}>Submit RET Document</Typography>
-          <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8fa3b8', mt: 1.2, letterSpacing: '1px' }}>
-            Process 1.0 — VP will be notified via email upon submission
+          <Typography sx={{ fontWeight: 700, color: '#1C0A0E', fontSize: '1rem' }}>Submit RET Document</Typography>
+          <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#8B7A6B', mt: 0.5, letterSpacing: '1px' }}>
+            OVPRET · Document Tracking System
           </Typography>
         </Box>
-        <IconButton onClick={handleClose} disabled={uploading} size="small" sx={{ color: '#8fa3b8', mt: -0.5 }}>
+        <IconButton onClick={handleClose} disabled={uploading} size="small" sx={{ color: '#8B7A6B', mt: -0.5 }}>
           <CloseIcon fontSize="small" />
         </IconButton>
       </DialogTitle>
 
-      <DialogContent sx={{ pt: 5, pb: 3, overflow: 'visible' }}>
+      <DialogContent sx={{ pt: 3, pb: 3 }}>
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         {uploading && (
           <Box sx={{ mb: 2 }}>
-            <Typography sx={{ fontSize: '0.7rem', color: '#8fa3b8', mb: 0.5 }}>
-              {progress < 65 ? 'Uploading file...' : progress < 85 ? 'Saving document...' : 'Sending notification to VP...'}
+            <Typography sx={{ fontSize: '0.7rem', color: '#6B4050', mb: 0.5 }}>
+              {progress < 65 ? 'Uploading file...' : progress < 85 ? 'Saving document...' : 'Sending notification...'}
             </Typography>
             <LinearProgress variant="determinate" value={progress} />
           </Box>
@@ -153,36 +131,28 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
             <TextField
               label="Document Title *" fullWidth
               value={form.title} onChange={field('title')} disabled={uploading}
-              placeholder="e.g., Q1 Budget Request FY 2024"
-              InputLabelProps={LABEL_PROPS}
-              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={TEXT_SX}
+              placeholder="e.g., Q1 Accomplishment Report FY 2024"
+              inputProps={{ style: { fontSize: '0.85rem' } }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               select label="Document Type *" fullWidth
               value={form.type} onChange={field('type')} disabled={uploading}
-              InputLabelProps={LABEL_PROPS}
-              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ ...FIELD_SX, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.type ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
-              SelectProps={{ displayEmpty: true, MenuProps: MENU_PROPS }}
+              SelectProps={{ displayEmpty: true }}
             >
-              <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select type...</MenuItem>
+              <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select type...</MenuItem>
               {DOC_TYPES.map((t) => <MenuItem key={t} value={t} sx={{ fontSize: '0.85rem' }}>{t}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              select label="Department / Office *" fullWidth
+              select label="Office *" fullWidth
               value={form.department} onChange={field('department')} disabled={uploading}
-              InputLabelProps={LABEL_PROPS}
-              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={{ ...FIELD_SX, '& .MuiSelect-icon': { color: '#a8bfd4' }, '& .MuiSelect-select': { color: form.department ? '#f0e8d0' : '#6a8aaa', fontSize: '0.85rem' } }}
-              SelectProps={{ displayEmpty: true, MenuProps: MENU_PROPS }}
+              SelectProps={{ displayEmpty: true }}
             >
-              <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#6a8aaa', fontStyle: 'italic' }}>Select department...</MenuItem>
-              {DEPARTMENTS.map((d) => <MenuItem key={d} value={d} sx={{ fontSize: '0.85rem' }}>{d}</MenuItem>)}
+              <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select office...</MenuItem>
+              {OFFICES.map((d) => <MenuItem key={d} value={d} sx={{ fontSize: '0.85rem' }}>{d}</MenuItem>)}
             </TextField>
           </Grid>
           <Grid item xs={12}>
@@ -190,21 +160,19 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
               label="Remarks / Notes" fullWidth multiline minRows={3}
               value={form.remarks} onChange={field('remarks')} disabled={uploading}
               placeholder="Optional — any notes for the VP..."
-              InputLabelProps={LABEL_PROPS}
-              inputProps={{ style: { fontSize: '0.85rem', color: '#f0e8d0' } }}
-              sx={TEXT_SX}
+              inputProps={{ style: { fontSize: '0.85rem' } }}
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#8fa3b8', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
+            <Typography sx={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '1.5px', color: '#6B4050', textTransform: 'uppercase', mb: 1 }}>Attach Document</Typography>
             {file ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(245,168,0,0.3)', borderRadius: 1.5, bgcolor: '#141f2a' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2, border: '1px solid rgba(123,28,46,0.15)', borderRadius: 1.5, bgcolor: '#F9F6F1' }}>
                 <InsertDriveFileIcon sx={{ color: '#c9952a', fontSize: 28 }} />
                 <Box sx={{ flex: 1 }}>
-                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#fff' }}>{file.name}</Typography>
-                  <Typography sx={{ fontSize: '0.68rem', color: '#8fa3b8', fontFamily: "'IBM Plex Mono',monospace" }}>{formatFileSize(file.size)}</Typography>
+                  <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#1C0A0E' }}>{file.name}</Typography>
+                  <Typography sx={{ fontSize: '0.68rem', color: '#8B7A6B', fontFamily: "'IBM Plex Mono',monospace" }}>{formatFileSize(file.size)}</Typography>
                 </Box>
-                <IconButton onClick={() => setFile(null)} disabled={uploading} size="small" sx={{ color: '#ef5350' }}><DeleteIcon fontSize="small" /></IconButton>
+                <IconButton onClick={() => setFile(null)} disabled={uploading} size="small" sx={{ color: '#c62828' }}><DeleteIcon fontSize="small" /></IconButton>
               </Box>
             ) : (
               <Box
@@ -212,13 +180,13 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
                 onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={handleDrop}
-                sx={{ border: `2px dashed ${dragging ? '#c9952a' : '#2a3545'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? '#141f2a' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}
+                sx={{ border: `2px dashed ${dragging ? '#c9952a' : 'rgba(123,28,46,0.2)'}`, borderRadius: 1.5, p: 4, textAlign: 'center', cursor: uploading ? 'not-allowed' : 'pointer', bgcolor: dragging ? '#F9F6F1' : 'transparent', transition: 'all 0.15s', '&:hover': { borderColor: '#c9952a' } }}
               >
-                <CloudUploadIcon sx={{ fontSize: 34, color: '#8fa3b8', mb: 1 }} />
-                <Typography sx={{ fontSize: '0.82rem', color: '#8fa3b8' }}>
+                <CloudUploadIcon sx={{ fontSize: 34, color: '#8B7A6B', mb: 1 }} />
+                <Typography sx={{ fontSize: '0.82rem', color: '#6B4050' }}>
                   Drag & drop or <Box component="span" sx={{ color: '#c9952a', fontWeight: 600 }}>click to browse</Box>
                 </Typography>
-                <Typography sx={{ fontSize: '0.68rem', color: '#8fa3b8', mt: 0.5 }}>{ALLOWED_TYPES.join(', ')} — max 10 MB</Typography>
+                <Typography sx={{ fontSize: '0.68rem', color: '#8B7A6B', mt: 0.5 }}>{ALLOWED_TYPES.join(', ')} — max 10 MB</Typography>
               </Box>
             )}
             <input ref={fileRef} type="file" hidden accept={ALLOWED_TYPES.join(',')} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
@@ -226,10 +194,10 @@ export const SubmitDocumentModal: React.FC<Props> = ({ open, onClose, onSuccess,
         </Grid>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid #243040', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(123,28,46,0.1)', gap: 1 }}>
         <Button onClick={handleClose} disabled={uploading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
-        <Button onClick={handleSubmit} disabled={uploading} variant="contained" sx={{ fontSize: '0.72rem', minWidth: 180 }}>
-          {uploading ? 'Submitting...' : 'Submit for VP Approval'}
+        <Button onClick={handleSubmit} disabled={uploading} variant="contained" color="secondary" sx={{ fontSize: '0.72rem', minWidth: 180 }}>
+          {uploading ? 'Submitting...' : 'Submit Document'}
         </Button>
       </DialogActions>
     </Dialog>

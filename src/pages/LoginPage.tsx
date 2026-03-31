@@ -96,15 +96,15 @@ export const LoginPage: React.FC = () => {
           width: '100%', maxWidth: 420,
           p: { xs: '28px 24px', md: '40px' },
           borderRadius: 3,
-          border: '1px solid #1e1218',
-          boxShadow: '0 4px 24px #1e1218',
+          border: '1px solid rgba(123,28,46,0.12)',
+          boxShadow: '0 4px 24px rgba(123,28,46,0.08)',
           position: 'relative', overflow: 'hidden',
         }}>
           {loading && <LinearProgress sx={{ position: 'absolute', top: 0, left: 0, right: 0 }} />}
 
           {/* Mobile logo */}
           <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mb: 3 }}>
-            <Box sx={{ width: 72, height: 72, borderRadius: '50%', border: '2px solid #261618', overflow: 'hidden', bgcolor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Box sx={{ width: 72, height: 72, borderRadius: '50%', border: '2px solid rgba(123,28,46,0.2)', overflow: 'hidden', bgcolor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img src="/logo.png" alt="MSU" style={{ width: '90%', height: '90%', objectFit: 'contain' }} />
             </Box>
           </Box>

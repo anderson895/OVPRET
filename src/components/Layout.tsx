@@ -21,7 +21,6 @@ import GavelIcon from '@mui/icons-material/Gavel'
 import PeopleIcon from '@mui/icons-material/People'
 import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
-import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import SettingsIcon from '@mui/icons-material/Settings'
 import type { AppUser } from '../types'
 
@@ -43,7 +42,7 @@ interface Props {
 
 export const PAGE_TITLES: Record<PageId, string> = {
   dashboard:      'Dashboard',
-  submit:         'Submit RET Document',
+  submit:         'Submit Documents',
   review:         'Review & Process Documents',
   analytics:      'Document Analytics',
   logs:           'Transaction Logs & History',
@@ -58,10 +57,10 @@ export const Layout: React.FC<Props> = ({
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
 
+  // Staff: merged "Submit Document" + "My Documents" into one "Submit Documents" page
   const navItems: NavItem[] = [
     { id: 'dashboard',     label: 'Dashboard',         icon: <DashboardIcon  fontSize="small" />, roles: ['admin','staff','vp'] },
-    { id: 'submit',        label: 'Submit Document',    icon: <UploadFileIcon fontSize="small" />, roles: ['staff'] },
-    { id: 'my-documents',  label: 'My Documents',       icon: <FolderOpenIcon fontSize="small" />, roles: ['staff'] },
+    { id: 'submit',        label: 'Submit Documents',   icon: <UploadFileIcon fontSize="small" />, roles: ['staff'] },
     { id: 'review',        label: 'Review Documents',   icon: <RateReviewIcon fontSize="small" />, roles: ['vp'], badge: pendingCount },
     { id: 'vp-decisions',  label: 'My Decisions',       icon: <GavelIcon      fontSize="small" />, roles: ['vp'] },
     { id: 'analytics',     label: 'Analytics',          icon: <BarChartIcon   fontSize="small" />, roles: ['admin'] },
@@ -74,6 +73,7 @@ export const Layout: React.FC<Props> = ({
 
   const SidebarContent = () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: '#7B1C2E' }}>
+      {/* Header: OVPRET with role below */}
       <Box sx={{ p: '18px 16px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Box sx={{
@@ -86,11 +86,11 @@ export const Layout: React.FC<Props> = ({
             <img src="/logo.png" alt="MSU" style={{ width: '92%', height: '92%', objectFit: 'contain' }} />
           </Box>
           <Box>
-            <Typography sx={{ fontSize: '0.62rem', fontWeight: 800, color: '#F5A800', lineHeight: 1.2, letterSpacing: '0.3px' }}>
-              Marinduque State<br />University
+            <Typography sx={{ fontSize: '0.72rem', fontWeight: 800, color: '#F5A800', lineHeight: 1.2, letterSpacing: '0.5px' }}>
+              OVPRET
             </Typography>
             <Typography sx={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.3, mt: 0.3, letterSpacing: '0.2px' }}>
-              OVPRET · DTS
+              {roleLabel}
             </Typography>
           </Box>
         </Box>

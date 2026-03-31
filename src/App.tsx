@@ -12,7 +12,7 @@ import { AnalyticsPage } from './pages/AnalyticsPage'
 import { LogsPage } from './pages/LogsPage'
 import { AdminStaffPage } from './pages/AdminStaffPage'
 import { SubmitPage } from './pages/SubmitPage'
-import { MyDocumentsPage } from './pages/MyDocumentsPage'
+// MyDocumentsPage merged into SubmitPage
 import { ProfilePage } from './pages/ProfilePage'
 import { VPDecisionsPage } from './pages/VPDecisionsPage'
 import { Layout, type PageId, PAGE_TITLES } from './components/Layout'
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         return <SubmitPage documents={documents} user={user} />
 
       case 'my-documents':
-        return <MyDocumentsPage documents={documents} user={user} />
+        return <SubmitPage documents={documents} user={user} />
 
       case 'review':
         return <ReviewPage documents={documents} user={user} />

@@ -11,7 +11,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Chip from '@mui/material/Chip'
-import EmailIcon from '@mui/icons-material/Email'
 import type { RETDocument, TransactionLog } from '../types'
 import { StatusChip } from '../components/StatusChip'
 
@@ -29,12 +28,12 @@ const fmtShort = (ts: any): string => {
 }
 
 const actionColor = (a: string): string => {
-  if (a.includes('Approved'))  return '#66bb6a'
-  if (a.includes('Rejected'))  return '#ef5350'
+  if (a.includes('Approved'))  return '#2e7d32'
+  if (a.includes('Rejected'))  return '#c62828'
   if (a.includes('Submitted')) return '#c9952a'
-  if (a.includes('Revision'))  return '#4fc3f7'
-  if (a.includes('Review'))    return '#ce93d8'
-  return '#8fa3b8'
+  if (a.includes('Revision'))  return '#1565c0'
+  if (a.includes('Review'))    return '#7b1fa2'
+  return '#6B4050'
 }
 
 export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
@@ -43,40 +42,40 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
   return (
     <Box>
       <Box sx={{ mb: 3 }}>
-        <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>Document Database</Typography>
-        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#000000' }}>Transaction Logs & History</Typography>
-        <Typography sx={{ fontSize: '0.75rem', color: '#8fa3b8', mt: 0.3 }}>Immutable audit trail of all document actions including Brevo email notifications.</Typography>
+        <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>OVPRET</Typography>
+        <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#1C0A0E' }}>Transaction Logs & History</Typography>
+        <Typography sx={{ fontSize: '0.75rem', color: '#6B4050', mt: 0.3 }}>Immutable audit trail of all document actions.</Typography>
       </Box>
 
-      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid #243040', mb: 3, minHeight: 36 }}>
+      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ borderBottom: '1px solid rgba(123,28,46,0.1)', mb: 3, minHeight: 36 }}>
         <Tab label={`Transaction Logs (${logs.length})`} sx={{ minHeight: 36, fontSize: '0.68rem' }} />
         <Tab label={`Document History (${documents.length})`} sx={{ minHeight: 36, fontSize: '0.68rem' }} />
       </Tabs>
 
       {tab === 0 && (
-        <Paper sx={{ bgcolor: '#0f1e2e' }}>
-          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>System Audit Log</Typography>
-            <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8fa3b8' }}>{logs.length} entries</Typography>
+        <Paper sx={{ bgcolor: '#fff' }}>
+          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(123,28,46,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography sx={{ fontWeight: 600, color: '#1C0A0E', fontSize: '0.88rem' }}>System Audit Log</Typography>
+            <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8B7A6B' }}>{logs.length} entries</Typography>
           </Box>
           {logs.length === 0 ? (
-            <Box sx={{ py: 8, textAlign: 'center' }}><Typography sx={{ color: '#8fa3b8', fontSize: '0.8rem' }}>No logs yet.</Typography></Box>
+            <Box sx={{ py: 8, textAlign: 'center' }}><Typography sx={{ color: '#8B7A6B', fontSize: '0.8rem' }}>No logs yet.</Typography></Box>
           ) : (
             logs.map((log, i) => (
-              <Box key={log.id} sx={{ display: 'flex', gap: 2.5, px: 3, py: 1.5, borderBottom: i < logs.length - 1 ? '1px solid #162030' : 'none', '&:hover': { bgcolor: '#141f2a' } }}>
+              <Box key={log.id} sx={{ display: 'flex', gap: 2.5, px: 3, py: 1.5, borderBottom: i < logs.length - 1 ? '1px solid rgba(123,28,46,0.06)' : 'none', '&:hover': { bgcolor: 'rgba(123,28,46,0.02)' } }}>
                 <Box sx={{ width: 155, flexShrink: 0 }}>
-                  <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8fa3b8', lineHeight: 1.5 }}>{fmt(log.at)}</Typography>
+                  <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.62rem', color: '#8B7A6B', lineHeight: 1.5 }}>{fmt(log.at)}</Typography>
                 </Box>
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: actionColor(log.action), flexShrink: 0, mt: 0.7 }} />
                 <Box sx={{ flex: 1 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#fff' }}>{log.action}</Typography>
+                    <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, color: '#1C0A0E' }}>{log.action}</Typography>
                     <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#c9952a' }}>{log.docId}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: '0.72rem', color: '#8fa3b8', mt: 0.2 }}>{log.docTitle}</Typography>
+                  <Typography sx={{ fontSize: '0.72rem', color: '#6B4050', mt: 0.2 }}>{log.docTitle}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.4 }}>
                     <Typography sx={{ fontSize: '0.65rem', color: '#c9952a' }}>{log.by}</Typography>
-                    <Chip label={log.role} size="small" sx={{ height: 16, fontSize: '0.55rem', fontFamily: "'IBM Plex Mono',monospace", bgcolor: '#162230', color: '#8fa3b8', border: '1px solid #243040', '& .MuiChip-label': { px: 0.8 } }} />
+                    <Chip label={log.role} size="small" sx={{ height: 16, fontSize: '0.55rem', fontFamily: "'IBM Plex Mono',monospace", bgcolor: 'rgba(123,28,46,0.06)', color: '#6B4050', border: '1px solid rgba(123,28,46,0.12)', '& .MuiChip-label': { px: 0.8 } }} />
                   </Box>
                 </Box>
               </Box>
@@ -86,12 +85,12 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
       )}
 
       {tab === 1 && (
-        <Paper sx={{ bgcolor: '#0f1e2e' }}>
-          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid #243040' }}>
-            <Typography sx={{ fontWeight: 600, color: '#fff', fontSize: '0.88rem' }}>RET Document History</Typography>
+        <Paper sx={{ bgcolor: '#fff' }}>
+          <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(123,28,46,0.1)' }}>
+            <Typography sx={{ fontWeight: 600, color: '#1C0A0E', fontSize: '0.88rem' }}>RET Document History</Typography>
           </Box>
           {documents.length === 0 ? (
-            <Box sx={{ py: 8, textAlign: 'center' }}><Typography sx={{ color: '#8fa3b8', fontSize: '0.8rem' }}>No documents submitted yet.</Typography></Box>
+            <Box sx={{ py: 8, textAlign: 'center' }}><Typography sx={{ color: '#8B7A6B', fontSize: '0.8rem' }}>No documents submitted yet.</Typography></Box>
           ) : (
             <TableContainer>
               <Table>
@@ -102,7 +101,6 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
                     <TableCell>Status</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Submitted By</TableCell>
-                    <TableCell>Email Notifs</TableCell>
                     <TableCell>Date</TableCell>
                     <TableCell>Updated</TableCell>
                   </TableRow>
@@ -113,25 +111,13 @@ export const LogsPage: React.FC<Props> = ({ documents, logs }) => {
                       <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.7rem', color: '#c9952a' }}>{doc.retId}</Typography></TableCell>
                       <TableCell><Typography sx={{ fontWeight: 500, fontSize: '0.78rem', maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.title}</Typography></TableCell>
                       <TableCell><StatusChip status={doc.status} /></TableCell>
-                      <TableCell><Typography sx={{ fontSize: '0.72rem', color: '#8fa3b8' }}>{doc.type}</Typography></TableCell>
+                      <TableCell><Typography sx={{ fontSize: '0.72rem', color: '#6B4050' }}>{doc.type}</Typography></TableCell>
                       <TableCell>
                         <Typography sx={{ fontSize: '0.75rem' }}>{doc.submittedBy}</Typography>
-                        <Typography sx={{ fontSize: '0.62rem', color: '#8fa3b8', fontFamily: "'IBM Plex Mono',monospace" }}>{doc.submittedByEmail}</Typography>
+                        <Typography sx={{ fontSize: '0.62rem', color: '#8B7A6B', fontFamily: "'IBM Plex Mono',monospace" }}>{doc.submittedByEmail}</Typography>
                       </TableCell>
-                      <TableCell>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.3 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
-                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToVP ? '#66bb6a' : '#4a6070' }} />
-                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToVP ? '#66bb6a' : '#4a6070', fontFamily: "'IBM Plex Mono',monospace" }}>VP</Typography>
-                          </Box>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
-                            <EmailIcon sx={{ fontSize: 11, color: doc.emailSentToStaff ? '#4fc3f7' : '#4a6070' }} />
-                            <Typography sx={{ fontSize: '0.6rem', color: doc.emailSentToStaff ? '#4fc3f7' : '#4a6070', fontFamily: "'IBM Plex Mono',monospace" }}>Staff</Typography>
-                          </Box>
-                        </Box>
-                      </TableCell>
-                      <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8fa3b8' }}>{fmtShort(doc.createdAt)}</Typography></TableCell>
-                      <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8fa3b8' }}>{fmtShort(doc.updatedAt)}</Typography></TableCell>
+                      <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8B7A6B' }}>{fmtShort(doc.createdAt)}</Typography></TableCell>
+                      <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8B7A6B' }}>{fmtShort(doc.updatedAt)}</Typography></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

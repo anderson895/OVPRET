@@ -5,11 +5,11 @@ import type { DocStatus } from '../types'
 interface Props { status: DocStatus | string; size?: 'small' | 'medium' }
 
 const CFG: Record<string, { color: string; bg: string; border: string }> = {
-  'Pending':              { color: '#ffa726', bg: 'rgba(230,81,0,0.12)',    border: 'rgba(230,81,0,0.3)'    },
-  'Under Review':         { color: '#ce93d8', bg: 'rgba(123,31,162,0.12)', border: 'rgba(123,31,162,0.3)'  },
-  'Approved':             { color: '#66bb6a', bg: '#0e2010',  border: 'rgba(46,125,50,0.3)'   },
-  'Rejected':             { color: '#ef5350', bg: '#200e0e',  border: 'rgba(183,28,28,0.3)'   },
-  'Request For Revision': { color: '#4fc3f7', bg: 'rgba(2,119,189,0.12)',  border: 'rgba(2,119,189,0.3)'   },
+  'Pending':              { color: '#b36b00', bg: 'rgba(245,168,0,0.12)',   border: 'rgba(245,168,0,0.35)' },
+  'Under Review':         { color: '#7b1fa2', bg: 'rgba(123,31,162,0.1)',  border: 'rgba(123,31,162,0.3)' },
+  'Approved':             { color: '#2e7d32', bg: 'rgba(46,125,50,0.1)',   border: 'rgba(46,125,50,0.3)'  },
+  'Rejected':             { color: '#c62828', bg: 'rgba(198,40,40,0.08)',  border: 'rgba(198,40,40,0.3)'  },
+  'Request For Revision': { color: '#1565c0', bg: 'rgba(21,101,192,0.08)', border: 'rgba(21,101,192,0.3)' },
 }
 
 export const StatusChip: React.FC<Props> = ({ status, size = 'small' }) => {

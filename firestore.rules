@@ -11,7 +11,7 @@ service cloud.firestore {
     function isStaff() { return isAuthenticated() && getUserRole() == 'staff'; }
     function isActive() { return userDoc().isActive == true; }
 
-    // ── Users collection (staff profiles) ──────────────────
+    // ── Users collection ────────────────────────────────────
     match /users/{userId} {
       allow read:   if isAuthenticated() && (request.auth.uid == userId || isAdmin());
       allow create: if isAdmin();
@@ -21,26 +21,39 @@ service cloud.firestore {
 
     // ── Documents collection ────────────────────────────────
     match /documents/{docId} {
-      // get (single doc) — staff can only read their own doc
+
+      // READ
       allow get: if isAdmin() ||
         (isAuthenticated() && isActive() && isVP()) ||
-        (isAuthenticated() && isActive() && isStaff() && resource.data.submittedByUid == request.auth.uid);
+        (isAuthenticated() && isActive() && isStaff() &&
+          resource.data.submittedByUid == request.auth.uid);
 
-      // list (queries/onSnapshot) — staff is allowed; query-level filter
-      // (where submittedByUid == uid) is enforced in the app code
       allow list: if isAdmin() ||
         (isAuthenticated() && isActive() && isVP()) ||
         (isAuthenticated() && isActive() && isStaff());
 
+      // CREATE
       allow create: if isAuthenticated() && isActive() &&
         (isStaff() || isAdmin()) &&
         request.resource.data.submittedByUid == request.auth.uid;
 
-      allow update: if isAuthenticated() && isActive() && (isVP() || isAdmin());
+      // UPDATE (UPDATED ✅)
+      allow update: if isAuthenticated() && isActive() &&
+        (
+          isAdmin() ||
+          isVP() ||
+          (
+            isStaff() &&
+            resource.data.submittedByUid == request.auth.uid && // own doc only
+            request.resource.data.submittedByUid == resource.data.submittedByUid // cannot change owner
+          )
+        );
+
+      // DELETE
       allow delete: if isAdmin();
     }
 
-    // ── Transaction logs — append-only ──────────────────────
+    // ── Logs (append-only) ──────────────────────────────────
     match /logs/{logId} {
       allow read:   if isAdmin() || (isAuthenticated() && isActive() && isVP());
       allow create: if isAuthenticated() && isActive();
