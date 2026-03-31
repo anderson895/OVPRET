@@ -44,6 +44,26 @@ export function listenStaff(cb: (staff: StaffAccount[]) => void): () => void {
   ))
 }
 
+// ── Admin: approve pending staff account ──────────────────────
+export async function approveStaffAccount(uid: string, adminEmail: string): Promise<void> {
+  await updateDoc(doc(db, 'users', uid), {
+    isActive: true,
+    status: 'approved',
+    approvedBy: adminEmail,
+    approvedAt: serverTimestamp(),
+  })
+}
+
+// ── Admin: reject pending staff account ───────────────────────
+export async function rejectStaffAccount(uid: string, adminEmail: string): Promise<void> {
+  await updateDoc(doc(db, 'users', uid), {
+    isActive: false,
+    status: 'rejected',
+    rejectedBy: adminEmail,
+    rejectedAt: serverTimestamp(),
+  })
+}
+
 // ── Document submission (Process 1.0) ─────────────────────────
 export async function submitDocument(data: {
   title: string; type: string; department: string; remarks: string

@@ -38,7 +38,7 @@ const DOC_TYPES = [
 
 const OFFICES = [
   'Office of the Research Director',
-  'Office of the Knowledge Technology Transfer',
+  'Office of the Knowledge and Technology Transfer',
   'Office of the Extension Director',
 ]
 

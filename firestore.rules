@@ -4,18 +4,33 @@ service cloud.firestore {
 
     // ── Helper functions ────────────────────────────────────
     function isAuthenticated() { return request.auth != null; }
-    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
-    function getUserRole() { return userDoc().role; }
-    function isAdmin() { return isAuthenticated() && getUserRole() == 'admin'; }
-    function isVP()    { return isAuthenticated() && getUserRole() == 'vp'; }
-    function isStaff() { return isAuthenticated() && getUserRole() == 'staff'; }
-    function isActive() { return userDoc().isActive == true; }
+    function userDoc()         { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function getUserRole()     { return userDoc().role; }
+    function isAdmin()  { return isAuthenticated() && getUserRole() == 'admin'; }
+    function isVP()     { return isAuthenticated() && getUserRole() == 'vp'; }
+    function isStaff()  { return isAuthenticated() && getUserRole() == 'staff'; }
+    function isActive() { return isAuthenticated() && userDoc().isActive == true; }
 
     // ── Users collection ────────────────────────────────────
     match /users/{userId} {
       allow read:   if isAuthenticated() && (request.auth.uid == userId || isAdmin());
-      allow create: if isAdmin();
-      allow update: if isAdmin() || request.auth.uid == userId;
+
+      // FIX: Allow self-registration.
+      // When a user registers, they are signed in to the primary app (so request.auth is
+      // not null), but they have no admin role yet.  We permit the create only if:
+      //   • the document UID matches the authenticated user
+      //   • role is locked to 'staff'
+      //   • account starts inactive and pending (requires admin approval)
+      allow create: if isAdmin() || (
+        isAuthenticated() &&
+        request.auth.uid == userId &&
+        request.resource.data.role == 'staff' &&
+        request.resource.data.isActive == false &&
+        request.resource.data.status == 'pending'
+      );
+
+      // FIX: self-update requires active account; admin can always update
+      allow update: if isAdmin() || (request.auth.uid == userId && isActive());
       allow delete: if isAdmin();
     }
 
@@ -24,27 +39,27 @@ service cloud.firestore {
 
       // READ
       allow get: if isAdmin() ||
-        (isAuthenticated() && isActive() && isVP()) ||
-        (isAuthenticated() && isActive() && isStaff() &&
+        (isActive() && isVP()) ||
+        (isActive() && isStaff() &&
           resource.data.submittedByUid == request.auth.uid);
 
       allow list: if isAdmin() ||
-        (isAuthenticated() && isActive() && isVP()) ||
-        (isAuthenticated() && isActive() && isStaff());
+        (isActive() && isVP()) ||
+        (isActive() && isStaff());
 
       // CREATE
       allow create: if isAuthenticated() && isActive() &&
         (isStaff() || isAdmin()) &&
         request.resource.data.submittedByUid == request.auth.uid;
 
-      // UPDATE (UPDATED ✅)
+      // UPDATE
       allow update: if isAuthenticated() && isActive() &&
         (
           isAdmin() ||
           isVP() ||
           (
             isStaff() &&
-            resource.data.submittedByUid == request.auth.uid && // own doc only
+            resource.data.submittedByUid == request.auth.uid &&           // own doc only
             request.resource.data.submittedByUid == resource.data.submittedByUid // cannot change owner
           )
         );
@@ -55,8 +70,8 @@ service cloud.firestore {
 
     // ── Logs (append-only) ──────────────────────────────────
     match /logs/{logId} {
-      allow read:   if isAdmin() || (isAuthenticated() && isActive() && isVP());
-      allow create: if isAuthenticated() && isActive();
+      allow read:           if isAdmin() || (isActive() && isVP());
+      allow create:         if isAuthenticated() && isActive();
       allow update, delete: if false;
     }
   }

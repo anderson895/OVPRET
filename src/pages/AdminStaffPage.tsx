@@ -21,14 +21,17 @@ import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import LinearProgress from '@mui/material/LinearProgress'
+import Badge from '@mui/material/Badge'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import BlockIcon from '@mui/icons-material/Block'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CloseIcon from '@mui/icons-material/Close'
 import PersonIcon from '@mui/icons-material/Person'
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
+import CancelIcon from '@mui/icons-material/Cancel'
 import type { StaffAccount, AppUser } from '../types'
-import { listenStaff, createStaffAccount, toggleStaffStatus, deleteStaffAccount } from '../services/documents'
+import { listenStaff, createStaffAccount, toggleStaffStatus, deleteStaffAccount, approveStaffAccount, rejectStaffAccount } from '../services/documents'
 import { logError } from '../services/errorLogger'
 
 interface Props { user: AppUser }
@@ -41,10 +44,11 @@ const fmtDate = (ts: any) => {
 
 const OFFICES = [
   'Office of the Research Director',
-  'Office of the Knowledge Technology Transfer',
+  'Office of the Knowledge and Technology Transfer',
   'Office of the Extension Director',
 ]
 
+// ── Create Staff Modal (admin-created accounts) ───────────────
 const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess: () => void; adminEmail: string }> = ({ open, onClose, onSuccess, adminEmail }) => {
   const [form, setForm] = useState({ email: '', password: '', confirmPassword: '', displayName: '', department: '' })
   const [loading, setLoading] = useState(false)
@@ -75,38 +79,30 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(123,28,46,0.1)', pb: 1.5 }}>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(123,28,46,0.1)', pb: 1.5, bgcolor: '#fff' }}>
         <Box>
           <Typography sx={{ fontWeight: 700, color: '#1C0A0E', fontSize: '0.95rem' }}>Create Staff Account</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#8B7A6B', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>New account will be active immediately</Typography>
         </Box>
         <IconButton onClick={handleClose} disabled={loading} size="small" sx={{ color: '#8B7A6B' }}><CloseIcon fontSize="small" /></IconButton>
       </DialogTitle>
-      <DialogContent sx={{ pt: 3 }}>
+      <DialogContent sx={{ pt: 3, bgcolor: '#fff' }}>
         {loading && <LinearProgress sx={{ mb: 2 }} />}
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         <Grid container spacing={2.5} sx={{ mt: 0.5 }}>
-          <Grid item xs={12}>
-            <TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} placeholder="e.g. Juan dela Cruz" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" />
-          </Grid>
+          <Grid item xs={12}><TextField label="Full Name *" fullWidth value={form.displayName} onChange={field('displayName')} disabled={loading} placeholder="e.g. Juan dela Cruz" /></Grid>
+          <Grid item xs={12}><TextField label="Email Address *" type="email" fullWidth value={form.email} onChange={field('email')} disabled={loading} placeholder="staff@ovpret.edu.ph" /></Grid>
           <Grid item xs={12}>
             <TextField select label="Office *" fullWidth value={form.department} onChange={field('department')} disabled={loading} SelectProps={{ displayEmpty: true }}>
               <MenuItem value="" sx={{ fontSize: '0.85rem', color: '#8B7A6B', fontStyle: 'italic' }}>Select office...</MenuItem>
               {OFFICES.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} placeholder="Re-enter password" />
-          </Grid>
+          <Grid item xs={12} sm={6}><TextField label="Password *" type="password" fullWidth value={form.password} onChange={field('password')} disabled={loading} placeholder="Min. 8 characters" /></Grid>
+          <Grid item xs={12} sm={6}><TextField label="Confirm Password *" type="password" fullWidth value={form.confirmPassword} onChange={field('confirmPassword')} disabled={loading} placeholder="Re-enter password" /></Grid>
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(123,28,46,0.1)', gap: 1 }}>
+      <DialogActions sx={{ px: 3, pb: 3, pt: 2, borderTop: '1px solid rgba(123,28,46,0.1)', gap: 1, bgcolor: '#fff' }}>
         <Button onClick={handleClose} disabled={loading} variant="outlined" sx={{ fontSize: '0.72rem' }}>Cancel</Button>
         <Button onClick={handleCreate} disabled={loading} variant="contained" color="secondary" startIcon={<PersonAddIcon />} sx={{ fontSize: '0.72rem', minWidth: 160 }}>
           {loading ? 'Creating...' : 'Create Account'}
@@ -116,6 +112,7 @@ const CreateStaffModal: React.FC<{ open: boolean; onClose: () => void; onSuccess
   )
 }
 
+// ── Main Page ─────────────────────────────────────────────────
 export const AdminStaffPage: React.FC<Props> = ({ user }) => {
   const [staff, setStaff] = useState<StaffAccount[]>([])
   const [showCreate, setShowCreate] = useState(false)
@@ -127,8 +124,32 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
     return unsub
   }, [])
 
-  const activeCount = staff.filter((s) => s.isActive).length
-  const inactiveCount = staff.filter((s) => !s.isActive).length
+  const pending  = staff.filter((s) => s.status === 'pending')
+  const approved = staff.filter((s) => s.status !== 'pending' && s.status !== 'rejected')
+  const rejected = staff.filter((s) => s.status === 'rejected')
+  const activeCount   = staff.filter((s) => s.isActive).length
+  const inactiveCount = staff.filter((s) => !s.isActive && s.status !== 'pending').length
+
+  const handleApprove = async (s: StaffAccount) => {
+    setToggling(s.uid)
+    try {
+      await approveStaffAccount(s.uid, user.email)
+      setSnack(`${s.displayName}'s account has been approved.`)
+    } catch (e: any) {
+      logError({ message: e.message, error: e, component: 'AdminStaffPage', action: 'approve_staff', userEmail: user.email, userRole: 'admin' })
+    } finally { setToggling(null) }
+  }
+
+  const handleReject = async (s: StaffAccount) => {
+    if (!window.confirm(`Reject ${s.displayName}'s account request?`)) return
+    setToggling(s.uid)
+    try {
+      await rejectStaffAccount(s.uid, user.email)
+      setSnack(`${s.displayName}'s account request has been rejected.`)
+    } catch (e: any) {
+      logError({ message: e.message, error: e, component: 'AdminStaffPage', action: 'reject_staff', userEmail: user.email, userRole: 'admin' })
+    } finally { setToggling(null) }
+  }
 
   const handleToggle = async (s: StaffAccount) => {
     setToggling(s.uid)
@@ -153,11 +174,12 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
 
   return (
     <Box>
+      {/* Header */}
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
         <Box>
           <Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.6rem', color: '#c9952a', letterSpacing: '2px', textTransform: 'uppercase', mb: 0.4 }}>OVPRET</Typography>
           <Typography sx={{ fontSize: '1.05rem', fontWeight: 700, color: '#1C0A0E' }}>Staff Account Management</Typography>
-          <Typography sx={{ fontSize: '0.75rem', color: '#6B4050', mt: 0.3 }}>Create and manage staff accounts.</Typography>
+          <Typography sx={{ fontSize: '0.75rem', color: '#6B4050', mt: 0.3 }}>Approve registration requests and manage staff accounts.</Typography>
         </Box>
         <Button variant="contained" color="secondary" startIcon={<PersonAddIcon />} onClick={() => setShowCreate(true)} sx={{ fontSize: '0.72rem' }}>
           Add Staff Account
@@ -166,13 +188,15 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
 
       {snack && <Alert severity="success" sx={{ mb: 2.5 }} onClose={() => setSnack('')}>{snack}</Alert>}
 
+      {/* Stats */}
       <Grid container spacing={2} sx={{ mb: 3 }}>
         {[
           { label: 'Total Staff', value: staff.length, color: '#1C0A0E' },
+          { label: 'Pending Approval', value: pending.length, color: '#c9952a' },
           { label: 'Active', value: activeCount, color: '#2e7d32' },
           { label: 'Inactive', value: inactiveCount, color: '#c62828' },
         ].map((s) => (
-          <Grid item xs={6} sm={4} key={s.label}>
+          <Grid item xs={6} sm={3} key={s.label}>
             <Paper sx={{ p: '16px 20px', bgcolor: '#fff' }}>
               <Typography sx={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '2px', color: '#6B4050', textTransform: 'uppercase', mb: 0.7 }}>{s.label}</Typography>
               <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", color: s.color, lineHeight: 1 }}>{s.value}</Typography>
@@ -181,17 +205,86 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
         ))}
       </Grid>
 
+      {/* ── PENDING REQUESTS ─────────────────────────────── */}
+      <Paper sx={{ bgcolor: '#fff', mb: 3 }}>
+        <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(123,28,46,0.1)', display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Badge badgeContent={pending.length} color="warning" max={99}>
+            <HourglassEmptyIcon sx={{ color: '#c9952a', fontSize: 20 }} />
+          </Badge>
+          <Box>
+            <Typography sx={{ fontWeight: 600, color: '#1C0A0E', fontSize: '0.88rem' }}>Pending Account Requests</Typography>
+            <Typography sx={{ fontSize: '0.62rem', color: '#6B4050', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>
+              Staff who registered and are waiting for approval
+            </Typography>
+          </Box>
+        </Box>
+
+        {pending.length === 0 ? (
+          <Box sx={{ py: 5, textAlign: 'center' }}>
+            <Typography sx={{ color: '#8B7A6B', fontSize: '0.82rem' }}>No pending requests.</Typography>
+          </Box>
+        ) : (
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Applicant</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Office</TableCell>
+                  <TableCell>Requested On</TableCell>
+                  <TableCell align="center">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pending.map((s) => (
+                  <TableRow key={s.uid} sx={{ opacity: toggling === s.uid ? 0.5 : 1, bgcolor: 'rgba(201,149,42,0.04)' }}>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
+                        <Box sx={{ width: 30, height: 30, borderRadius: '6px', bgcolor: 'rgba(201,149,42,0.12)', border: '1px solid rgba(201,149,42,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#c9952a' }}>{s.displayName?.[0]?.toUpperCase()}</Typography>
+                        </Box>
+                        <Typography sx={{ fontSize: '0.82rem', fontWeight: 500 }}>{s.displayName}</Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.7rem', color: '#1565c0' }}>{s.email}</Typography></TableCell>
+                    <TableCell><Typography sx={{ fontSize: '0.72rem', color: '#6B4050', maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.department}</Typography></TableCell>
+                    <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8B7A6B' }}>{fmtDate(s.createdAt)}</Typography></TableCell>
+                    <TableCell align="center">
+                      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+                        <Tooltip title="Approve account">
+                          <Button size="small" variant="contained" startIcon={<CheckCircleIcon />} onClick={() => handleApprove(s)} disabled={toggling === s.uid}
+                            sx={{ fontSize: '0.65rem', bgcolor: '#2e7d32', '&:hover': { bgcolor: '#388e3c' }, minWidth: 90 }}>
+                            Approve
+                          </Button>
+                        </Tooltip>
+                        <Tooltip title="Reject request">
+                          <Button size="small" variant="outlined" startIcon={<CancelIcon />} onClick={() => handleReject(s)} disabled={toggling === s.uid}
+                            sx={{ fontSize: '0.65rem', borderColor: 'rgba(198,40,40,0.3)', color: '#c62828', '&:hover': { bgcolor: 'rgba(198,40,40,0.05)', borderColor: '#c62828' }, minWidth: 80 }}>
+                            Reject
+                          </Button>
+                        </Tooltip>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
+
+      {/* ── ACTIVE STAFF ACCOUNTS ────────────────────────── */}
       <Paper sx={{ bgcolor: '#fff' }}>
         <Box sx={{ p: '16px 24px 12px', borderBottom: '1px solid rgba(123,28,46,0.1)' }}>
           <Typography sx={{ fontWeight: 600, color: '#1C0A0E', fontSize: '0.88rem' }}>Staff Accounts</Typography>
           <Typography sx={{ fontSize: '0.62rem', color: '#6B4050', mt: 0.2, fontFamily: "'IBM Plex Mono',monospace" }}>Manage who can log in and submit documents</Typography>
         </Box>
 
-        {staff.length === 0 ? (
+        {approved.length === 0 ? (
           <Box sx={{ py: 9, textAlign: 'center' }}>
             <PersonIcon sx={{ fontSize: 40, color: '#8B7A6B', mb: 1.5 }} />
             <Typography sx={{ fontWeight: 600, color: '#1C0A0E', mb: 0.5 }}>No staff accounts yet</Typography>
-            <Typography sx={{ color: '#6B4050', fontSize: '0.8rem', mb: 3 }}>Create the first staff account to get started.</Typography>
+            <Typography sx={{ color: '#6B4050', fontSize: '0.8rem', mb: 3 }}>Create an account or approve a pending request.</Typography>
             <Button variant="contained" color="secondary" startIcon={<PersonAddIcon />} onClick={() => setShowCreate(true)} sx={{ fontSize: '0.72rem' }}>Add First Staff</Button>
           </Box>
         ) : (
@@ -209,7 +302,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {staff.map((s) => (
+                {approved.map((s) => (
                   <TableRow key={s.uid} sx={{ opacity: toggling === s.uid ? 0.5 : 1 }}>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
@@ -232,12 +325,17 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
                       />
                     </TableCell>
                     <TableCell><Typography sx={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '0.65rem', color: '#8B7A6B' }}>{fmtDate(s.createdAt)}</Typography></TableCell>
-                    <TableCell><Typography sx={{ fontSize: '0.7rem', color: '#6B4050' }}>{s.createdBy}</Typography></TableCell>
+                    <TableCell>
+                      <Typography sx={{ fontSize: '0.7rem', color: '#6B4050' }}>
+                        {s.createdBy === 'self-registered' ? (
+                          <Chip label="Self-registered" size="small" sx={{ fontSize: '0.58rem', height: 18, bgcolor: 'rgba(21,101,192,0.08)', color: '#1565c0', border: '1px solid rgba(21,101,192,0.2)', '& .MuiChip-label': { px: 0.8 } }} />
+                        ) : s.createdBy}
+                      </Typography>
+                    </TableCell>
                     <TableCell align="center">
                       <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center' }}>
                         <Tooltip title={s.isActive ? 'Deactivate account' : 'Activate account'}>
-                          <IconButton size="small" onClick={() => handleToggle(s)} disabled={toggling === s.uid}
-                            sx={{ color: s.isActive ? '#b36b00' : '#2e7d32' }}>
+                          <IconButton size="small" onClick={() => handleToggle(s)} disabled={toggling === s.uid} sx={{ color: s.isActive ? '#b36b00' : '#2e7d32' }}>
                             {s.isActive ? <BlockIcon fontSize="small" /> : <CheckCircleIcon fontSize="small" />}
                           </IconButton>
                         </Tooltip>

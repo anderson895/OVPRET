@@ -81,6 +81,7 @@ export interface StaffAccount {
   displayName: string
   department: string
   isActive: boolean
+  status: 'pending' | 'approved' | 'rejected'
   createdAt: any
   createdBy: string
 }
