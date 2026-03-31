@@ -13,9 +13,9 @@ export const DEMO_USERS: Record<string, AppUser> = {
 
 // ── Demo staff accounts (managed by admin) ───────────────────
 export let DEMO_STAFF: StaffAccount[] = [
-  { uid: 'uid_s1', email: 'staff1@ovpret.edu.ph', displayName: 'Maria Santos',   department: 'Research & Development Office',       isActive: true, createdAt: daysAgo(60), createdBy: 'admin@ovpret.edu.ph' },
-  { uid: 'uid_s2', email: 'staff2@ovpret.edu.ph', displayName: 'Juan Dela Cruz', department: 'Community Extension Services',          isActive: true, createdAt: daysAgo(45), createdBy: 'admin@ovpret.edu.ph' },
-  { uid: 'uid_s3', email: 'staff3@ovpret.edu.ph', displayName: 'Ana Reyes',      department: 'Technology Transfer Office',            isActive: false, createdAt: daysAgo(30), createdBy: 'admin@ovpret.edu.ph' },
+  { uid: 'uid_s1', email: 'staff1@ovpret.edu.ph', displayName: 'Maria Santos',   department: 'Research & Development Office',  isActive: true,  status: 'approved', createdAt: daysAgo(60), createdBy: 'admin@ovpret.edu.ph' },
+  { uid: 'uid_s2', email: 'staff2@ovpret.edu.ph', displayName: 'Juan Dela Cruz', department: 'Community Extension Services',   isActive: true,  status: 'approved', createdAt: daysAgo(45), createdBy: 'admin@ovpret.edu.ph' },
+  { uid: 'uid_s3', email: 'staff3@ovpret.edu.ph', displayName: 'Ana Reyes',      department: 'Technology Transfer Office',     isActive: false, status: 'rejected', createdAt: daysAgo(30), createdBy: 'admin@ovpret.edu.ph' },
 ]
 
 // ── Demo documents ───────────────────────────────────────────

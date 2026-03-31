@@ -87,10 +87,10 @@ export const Layout: React.FC<Props> = ({
           </Box>
           <Box>
             <Typography sx={{ fontSize: '0.72rem', fontWeight: 800, color: '#F5A800', lineHeight: 1.2, letterSpacing: '0.5px' }}>
-              OVPRET
+              Marinduque State University
             </Typography>
             <Typography sx={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.65)', lineHeight: 1.3, mt: 0.3, letterSpacing: '0.2px' }}>
-              {roleLabel}
+              OVPRET DTS
             </Typography>
           </Box>
         </Box>
