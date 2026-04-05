@@ -162,7 +162,7 @@ export const AdminStaffPage: React.FC<Props> = ({ user }) => {
   }
 
   const handleDelete = async (s: StaffAccount) => {
-    if (!window.confirm(`Remove ${s.displayName}? This will deactivate their account.`)) return
+    if (!window.confirm(`Permanently remove ${s.displayName}? This cannot be undone.`)) return
     setToggling(s.uid)
     try {
       await deleteStaffAccount(s.uid)

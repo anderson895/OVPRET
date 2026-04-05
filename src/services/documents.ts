@@ -1,6 +1,6 @@
 import type { RETDocument, TransactionLog, StaffAccount, DocStatus } from '../types'
 import {
-  db, collection, addDoc, doc, updateDoc,
+  db, collection, addDoc, doc, updateDoc, deleteDoc,
   onSnapshot, query, orderBy, where, serverTimestamp, setDoc,
   createAuthUserSafely,
 } from './firebase'
@@ -160,9 +160,10 @@ export async function toggleStaffStatus(uid: string, isActive: boolean): Promise
 
 // ── Admin: delete staff account ───────────────────────────────
 export async function deleteStaffAccount(uid: string): Promise<void> {
-  // Note: Deleting Firebase Auth user requires Admin SDK (Cloud Function).
-  // Here we just deactivate in Firestore.
-  await updateDoc(doc(db, 'users', uid), { isActive: false })
+  // Permanently removes the Firestore user document.
+  // Note: The Firebase Auth record persists until deleted via Admin SDK
+  // (Cloud Function), but without a Firestore doc the account cannot log in.
+  await deleteDoc(doc(db, 'users', uid))
 }
 
 // ── Document edit by staff ────────────────────────────────────
